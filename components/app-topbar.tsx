@@ -1,35 +1,29 @@
-import { Separator } from "@radix-ui/react-separator";
-import React from "react";
+'use client';
+import { Separator } from '@radix-ui/react-separator';
+import React from 'react';
 import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "./ui/breadcrumb";
-import { SidebarTrigger } from "./ui/sidebar";
-import Link from "next/link";
+  BreadcrumbSeparator,
+} from './ui/breadcrumb';
+import { SidebarTrigger } from './ui/sidebar';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-// Function to prettify URL segments
-const prettifySegment = (segment: string) => {
-  return segment
-    .replace(/-/g, " ") // Replace hyphens with spaces
-    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
-};
+export default function AppTopBar() {
+  const pathname = usePathname();
 
-export default function AppTopBar({
-  breadcrumbs,
-}: {
-  breadcrumbs: { title: string; link: string }[];
-}) {
-  const generatedBreadcrumbs =
-    breadcrumbs ??
-    window.location.pathname
-      .split("/")
-      .filter(Boolean) // Remove empty segments
-      .map((segment, index, segments) => ({
-        title: prettifySegment(segment),
-        link: `/${segments.slice(0, index + 1).join("/")}`, // Construct the URL link
-      }));
+  const breadcrumbs = pathname
+    .split('/')
+    .filter(Boolean)
+    .map((segment, index, allSegments) => ({
+      title: segment
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase()),
+      link: `/${allSegments.slice(0, index + 1).join('/')}`,
+    }));
 
   return (
     <>
@@ -39,15 +33,17 @@ export default function AppTopBar({
           <Separator orientation="vertical" className="mr-2 h-4" />
           <Breadcrumb>
             <BreadcrumbList>
-              {generatedBreadcrumbs.map((item, index) => (
-                <BreadcrumbItem
-                  className="hidden md:block"
-                  key={`${item.link}_${index}`}
-                >
-                  <BreadcrumbLink asChild>
-                    <Link href={item.link}>{item.title}</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
+              {breadcrumbs.map((item, index) => (
+                <React.Fragment key={`${item.link}_${index}`}>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink asChild>
+                      <Link href={item.link}>{item.title}</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  {index < breadcrumbs.length - 1 && (
+                    <BreadcrumbSeparator className="hidden md:block" />
+                  )}
+                </React.Fragment>
               ))}
             </BreadcrumbList>
           </Breadcrumb>
