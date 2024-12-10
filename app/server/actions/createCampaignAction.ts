@@ -1,4 +1,4 @@
-'user server';
+'use server';
 
 import { createCampaignSchema } from '@/app/campaigns/forms/CreateCampaignSchema';
 import { fetchApi } from '@/app/utils/api';
