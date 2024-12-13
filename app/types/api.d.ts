@@ -1,4 +1,4 @@
-export interface Campaign {
+export interface ICampaign {
   id: number;
   name: string;
   advertiserId: number;
@@ -8,4 +8,21 @@ export interface Campaign {
   updatedAt: Date;
 }
 
-export type CampaignsListResponse = Campaign[];
+export type CampaignsListResponse = ICampaign[];
+
+export enum ClientType {
+  Publisher = 1,
+  Advertiser = 2,
+}
+
+export interface IAdvertiser {
+  id: number;
+  name: string;
+  type: ClientType;
+  address: string;
+  contactMail: string;
+  financeMail: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

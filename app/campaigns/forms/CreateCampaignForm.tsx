@@ -16,13 +16,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
+import AdvertiserDropdown from '@/components/formDropDowns/AdvertiserDropdown';
 
 export default function CreateCampaignForm() {
   const form = useForm<z.infer<typeof createCampaignSchema>>({
     resolver: zodResolver(createCampaignSchema),
     defaultValues: {
       name: 'sample',
-      advertiserId: 1,
       landerId: 1,
       isActive: true,
       countries: [227],
@@ -60,22 +60,7 @@ export default function CreateCampaignForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="advertiserId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Advertiser</FormLabel>
-              <FormControl>
-                <Input placeholder="Campaign Name" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <AdvertiserDropdown formControl={form.control} name="advertiserId" />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
