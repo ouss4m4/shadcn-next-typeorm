@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import React from 'react';
 import { fetchApi } from '../utils/api';
-import { Campaign } from '../types/api';
+import { ICampaign } from '../types/api';
 import {
   TableCaption,
   TableHeader,
@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/table';
 
 export default async function CampaignsList() {
-  const campaigns = await fetchApi<Campaign[]>('/campaigns');
+  const campaigns = await fetchApi<ICampaign[]>('/campaigns');
 
   return (
     <>
