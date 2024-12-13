@@ -26,3 +26,12 @@ export interface IAdvertiser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ILander {
+  id: number;
+  name: string;
+  url: string;
+  clientId: number;
+  isActive: true;
+  createdAt: Date;
+}

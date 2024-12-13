@@ -17,15 +17,17 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
 import AdvertiserDropdown from '@/components/formDropDowns/AdvertiserDropdown';
+import LanderDropDown from '@/components/formDropDowns/LanderDropDown';
 
 export default function CreateCampaignForm() {
   const form = useForm<z.infer<typeof createCampaignSchema>>({
     resolver: zodResolver(createCampaignSchema),
     defaultValues: {
-      name: 'sample',
-      landerId: 1,
-      isActive: true,
-      countries: [227],
+      name: '',
+      advertiserId: undefined, // Match the type expected in your schema
+      landerId: undefined,
+      countries: [],
+      isActive: false,
     },
   });
 
@@ -42,6 +44,11 @@ export default function CreateCampaignForm() {
         {form.formState.errors.root && (
           <div className="text-sm text-destructive">
             {form.formState.errors.root.message}
+          </div>
+        )}
+        {form.formState.errors && (
+          <div className="text-sm text-destructive">
+            {JSON.stringify(form.formState.errors)}
           </div>
         )}
         <FormField
@@ -61,6 +68,7 @@ export default function CreateCampaignForm() {
           )}
         />
         <AdvertiserDropdown formControl={form.control} name="advertiserId" />
+        <LanderDropDown formControl={form.control} name="landerId" />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
