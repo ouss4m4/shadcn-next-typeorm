@@ -25,7 +25,7 @@ import {
  *
  * @returns ShadCn Dropdown that loads its own clients list
  */
-export default function AdvertiserDropdown({
+export default function AdvertiserSelect({
   formControl,
   name = 'advertiserId',
 }: {

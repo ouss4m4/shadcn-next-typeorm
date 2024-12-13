@@ -35,3 +35,10 @@ export interface ILander {
   isActive: true;
   createdAt: Date;
 }
+
+export interface ICountry {
+  id: number;
+  iso: string;
+  name: string;
+  niceName: string;
+}
