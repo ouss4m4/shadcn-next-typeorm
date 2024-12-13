@@ -42,6 +42,7 @@ export default function CreateCampaignForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {JSON.stringify(form.getValues('countries'))}
         {form.formState.errors.root && (
           <div className="text-sm text-destructive">
             {form.formState.errors.root.message}
