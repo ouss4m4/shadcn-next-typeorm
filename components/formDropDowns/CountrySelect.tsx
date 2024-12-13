@@ -3,22 +3,16 @@
 
 import { ICountry } from '@/app/types/api';
 import { fetchApi } from '@/app/utils/api';
+
 import React, { useEffect, useState } from 'react';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '../ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
+import MultipleSelector, { Option } from '../ui/MultipleSelector';
 
 export default function CountrySelect({
   formControl,
@@ -27,12 +21,20 @@ export default function CountrySelect({
   formControl: any;
   name: string;
 }) {
-  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [countries, setCountries] = useState<Option[]>([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const countries = await fetchApi<ICountry[]>('/countries');
-      setCountries(countries);
+      const countries: ICountry[] = await fetchApi<ICountry[]>('/countries');
+
+      const options: Option[] = countries.map((country) => {
+        return {
+          value: country.id.toString(),
+          label: country.niceName,
+        };
+      });
+
+      setCountries(options);
     };
     fetchCountries();
   }, []);
@@ -44,26 +46,22 @@ export default function CountrySelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>Countries</FormLabel>
-          <Select
-            onValueChange={(val) => field.onChange(Number(val))}
-            defaultValue={field.value?.toString()}
-          >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder="Select countries" />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {countries.map((country) => (
-                <SelectItem key={country.id} value={country.id.toString()}>
-                  {country.niceName}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormDescription>
-            Countries to target in your campaign
-          </FormDescription>
+          <FormControl>
+            <MultipleSelector
+              {...field}
+              onChange={(val) => {
+                const cntries = val.map((option) => option.value);
+                field.onChange(cntries);
+              }}
+              options={countries}
+              placeholder="Select countries ..."
+              emptyIndicator={
+                <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                  no results found.
+                </p>
+              }
+            />
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}
