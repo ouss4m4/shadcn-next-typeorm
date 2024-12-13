@@ -20,7 +20,7 @@ import {
   SelectItem,
 } from '../ui/select';
 
-export default function LanderDropDown({
+export default function LanderSelect({
   formControl,
   name,
 }: {

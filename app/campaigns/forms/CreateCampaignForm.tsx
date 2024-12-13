@@ -16,8 +16,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
-import AdvertiserDropdown from '@/components/formDropDowns/AdvertiserDropdown';
-import LanderDropDown from '@/components/formDropDowns/LanderDropDown';
+import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
+import LanderSelect from '@/components/formDropDowns/LanderSelect';
+import CountrySelect from '@/components/formDropDowns/CountrySelect';
 
 export default function CreateCampaignForm() {
   const form = useForm<z.infer<typeof createCampaignSchema>>({
@@ -67,8 +68,9 @@ export default function CreateCampaignForm() {
             </FormItem>
           )}
         />
-        <AdvertiserDropdown formControl={form.control} name="advertiserId" />
-        <LanderDropDown formControl={form.control} name="landerId" />
+        <AdvertiserSelect formControl={form.control} name="advertiserId" />
+        <LanderSelect formControl={form.control} name="landerId" />
+        <CountrySelect formControl={form.control} name="countries" />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
