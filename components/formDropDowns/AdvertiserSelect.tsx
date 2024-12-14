@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -68,7 +67,6 @@ export default function AdvertiserSelect({
               ))}
             </SelectContent>
           </Select>
-          <FormDescription>Select an advertiser</FormDescription>
           <FormMessage />
         </FormItem>
       )}
