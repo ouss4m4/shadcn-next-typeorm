@@ -19,6 +19,7 @@ import { createCampaignAction } from '@/app/server/actions/createCampaignAction'
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import CountrySelect from '@/components/formDropDowns/CountrySelect';
+import { redirect } from 'next/navigation';
 
 export default function CreateCampaignForm() {
   const form = useForm<z.infer<typeof createCampaignSchema>>({
@@ -37,6 +38,7 @@ export default function CreateCampaignForm() {
     if (data && data.error) {
       form.setError('root', { message: 'an error happened, please try again' });
     }
+    redirect('/campaigns');
   }
 
   return (
