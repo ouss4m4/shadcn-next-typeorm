@@ -49,10 +49,14 @@ export default function CountrySelect({
           <FormControl>
             <MultipleSelector
               {...field}
-              onChange={(val) => {
-                const cntries = val.map((option) => option.value);
-                field.onChange(cntries);
-              }}
+              // Transform the field value (number[]) to Option[]
+              value={countries.filter((option) =>
+                field.value?.includes(Number(option.value)),
+              )}
+              // Transform the selected Option[] back to number[] for the form state
+              onChange={(selected) =>
+                field.onChange(selected.map((opt: Option) => Number(opt.value)))
+              }
               options={countries}
               placeholder="Select countries ..."
               emptyIndicator={
