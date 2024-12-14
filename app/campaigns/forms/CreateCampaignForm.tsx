@@ -7,7 +7,6 @@ import { createCampaignSchema } from './CreateCampaignSchema';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +27,7 @@ export default function CreateCampaignForm() {
       name: '',
       advertiserId: undefined, // Match the type expected in your schema
       landerId: undefined,
-      countries: [],
+      countries: [1],
       isActive: false,
     },
   });
@@ -44,17 +43,12 @@ export default function CreateCampaignForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {JSON.stringify(form.getValues('countries'))}
         {form.formState.errors.root && (
           <div className="text-sm text-destructive">
             {form.formState.errors.root.message}
           </div>
         )}
-        {form.formState.errors && (
-          <div className="text-sm text-destructive">
-            {JSON.stringify(form.formState.errors)}
-          </div>
-        )}
+
         <FormField
           control={form.control}
           name="name"
@@ -64,9 +58,6 @@ export default function CreateCampaignForm() {
               <FormControl>
                 <Input placeholder="Campaign Name" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
