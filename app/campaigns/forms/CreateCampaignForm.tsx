@@ -27,7 +27,7 @@ export default function CreateCampaignForm() {
       name: '',
       advertiserId: undefined, // Match the type expected in your schema
       landerId: undefined,
-      countries: [1],
+      countries: [1], // array of ids
       isActive: false,
     },
   });
