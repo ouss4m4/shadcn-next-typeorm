@@ -4,6 +4,9 @@ export async function fetchApi<T>(
 ): Promise<T> {
   const baseUrl = process.env.BASE_URL ?? 'http://localhost:3001';
 
+  // Disable SSL certificate verification (development only)
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  console.log(baseUrl);
   // Set default headers if not already set
   const headers = {
     'Content-Type': 'application/json',
