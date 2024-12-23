@@ -2,9 +2,7 @@ export async function fetchApi<T>(
   url: string,
   options?: RequestInit,
 ): Promise<T> {
-  const baseUrl =
-    process.env.BASE_URL ??
-    'https://ec2-3-74-157-28.eu-central-1.compute.amazonaws.com';
+  const baseUrl = process.env.BASE_URL ?? 'https://api.bzouss.com';
 
   // Disable SSL certificate verification (development only)
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
