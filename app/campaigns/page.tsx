@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import React from 'react';
 import { fetchApi } from '../utils/api';
-import { ICampaign } from '../types/api';
+import { ICampaign } from '../types/types';
 import {
   TableCaption,
   TableHeader,
