@@ -54,9 +54,33 @@ export default function CountrySelect({
                 field.value?.includes(Number(option.value)),
               )}
               // Transform the selected Option[] back to number[] for the form state
-              onChange={(selected) =>
-                field.onChange(selected.map((opt: Option) => Number(opt.value)))
-              }
+              onChange={(selected) => {
+                const selectedOptions = [...selected]; // Ensure a copy to avoid side effects
+                const allCountriesOption = '1'; // Assume '1' is the value for "All Countries"
+
+                // If the last selected option is "All Countries"
+                if (selectedOptions.at(-1)?.value === allCountriesOption) {
+                  field.onChange([Number(allCountriesOption)]);
+                  return;
+                }
+
+                // If "All Countries" was already selected and other countries are added
+                if (
+                  selectedOptions[0]?.value === allCountriesOption &&
+                  selectedOptions.length > 1
+                ) {
+                  const filteredOptions = selectedOptions.filter(
+                    (opt) => opt.value !== allCountriesOption,
+                  );
+                  field.onChange(
+                    filteredOptions.map((opt) => Number(opt.value)),
+                  );
+                  return;
+                }
+
+                // General case: Map all selected options to numbers
+                field.onChange(selectedOptions.map((opt) => Number(opt.value)));
+              }}
               options={countries}
               placeholder="Select countries ..."
               emptyIndicator={

@@ -45,6 +45,7 @@ export interface ILander {
   name: string;
   url: string;
   clientId: number;
+  client: Client;
   isActive: true;
   createdAt: Date;
 }
