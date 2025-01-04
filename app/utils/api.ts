@@ -13,7 +13,11 @@ export async function fetchApi<T>(
     ...(options?.headers || {}),
   };
   console.log(`${baseUrl}${url}`);
-  const response = await fetch(`${baseUrl}${url}`, { ...options, headers });
+  const response = await fetch(`${baseUrl}${url}`, {
+    ...options,
+    headers,
+    cache: 'no-store',
+  });
 
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
