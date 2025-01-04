@@ -2,7 +2,10 @@ export async function fetchApi<T>(
   url: string,
   options?: RequestInit,
 ): Promise<T> {
-  const baseUrl = process.env.BASE_URL ?? 'https://api.bzouss.com';
+  const baseUrl =
+    process.env.NODE_ENV == 'production'
+      ? 'https://api.bzouss.com'
+      : 'http://localhost:3001';
 
   // Set default headers if not already set
   const headers = {

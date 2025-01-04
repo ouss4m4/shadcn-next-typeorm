@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { ILander } from '@/app/types/api';
+import { ILander } from '@/app/types/types';
 import { fetchApi } from '@/app/utils/api';
 
 import React, { useEffect, useState } from 'react';
