@@ -9,8 +9,9 @@ export default function CreateClient() {
         <CardHeader className="px-0">
           <CardTitle className="text-left">Create Client</CardTitle>
         </CardHeader>
-        <CreateClientForm />
-        <CardContent></CardContent>
+        <CardContent>
+          <CreateClientForm />
+        </CardContent>
       </Card>
     </div>
   );

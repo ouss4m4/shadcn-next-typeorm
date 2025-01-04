@@ -9,8 +9,9 @@ export default function CreateCampaign() {
         <CardHeader className="px-0">
           <CardTitle className="text-left">Campaign Details</CardTitle>
         </CardHeader>
-        <CreateCampaignForm />
-        <CardContent></CardContent>
+        <CardContent>
+          <CreateCampaignForm />
+        </CardContent>
       </Card>
       <Card className="p-4">
         <CardHeader className="px-0">

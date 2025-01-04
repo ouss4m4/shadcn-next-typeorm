@@ -14,13 +14,13 @@ import { ILander } from '../types/types';
 
 export default async function LandersList() {
   const landers = await fetchApi<ILander[]>('/landers');
-
+  console.log(landers);
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="flex justify-between">
           <h1 className="text-lg">Landers List</h1>
-          <Link href="/lander/create">Create Lander</Link>
+          <Link href="/landers/create">Create Lander</Link>
         </div>
 
         <Table>
@@ -38,7 +38,7 @@ export default async function LandersList() {
             {landers.map((lander) => (
               <TableRow key={lander.id}>
                 <TableCell className="font-medium">{lander.name}</TableCell>
-                <TableCell>{lander.client.name}</TableCell>
+                <TableCell>{lander.Client.name}</TableCell>
                 <TableCell>{lander.url}</TableCell>
                 <TableCell>{lander.isActive}</TableCell>
               </TableRow>

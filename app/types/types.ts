@@ -2,7 +2,9 @@ export interface ICampaign {
   id: number;
   name: string;
   advertiserId: number;
+  advertiser: IAdvertiser;
   landerId: number;
+  lander: ILander;
   isActive: true;
   createdAt: Date;
   updatedAt: Date;
@@ -45,7 +47,7 @@ export interface ILander {
   name: string;
   url: string;
   clientId: number;
-  client: Client;
+  Client: Client;
   isActive: true;
   createdAt: Date;
 }
