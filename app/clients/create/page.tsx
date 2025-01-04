@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
-import CreateClientForm from '../forms/ClientForm.create';
+import CreateClientForm from '../forms/CreateClientForm';
 
 export default function CreateClient() {
   return (
