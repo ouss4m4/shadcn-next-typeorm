@@ -5,7 +5,7 @@ export interface ICampaign {
   advertiser: IAdvertiser;
   landerId: number;
   lander: ILander;
-  isActive: true;
+  status: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,7 +24,7 @@ export interface IClient {
   address: string;
   contactMail: string;
   financeMail: string;
-  isActive: boolean;
+  status: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,8 +47,8 @@ export interface ILander {
   name: string;
   url: string;
   clientId: number;
-  Client: Client;
-  isActive: true;
+  client: Client;
+  status: true;
   createdAt: Date;
 }
 

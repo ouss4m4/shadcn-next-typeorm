@@ -37,10 +37,15 @@ export default async function LandersList() {
           <TableBody>
             {landers.map((lander) => (
               <TableRow key={lander.id}>
+                <TableCell>{lander.id}</TableCell>
                 <TableCell className="font-medium">{lander.name}</TableCell>
-                <TableCell>{lander.Client.name}</TableCell>
+                <TableCell>
+                  <Link href={`clients/${lander.client.id}`}>
+                    {lander.client.name}
+                  </Link>
+                </TableCell>
                 <TableCell>{lander.url}</TableCell>
-                <TableCell>{lander.isActive}</TableCell>
+                <TableCell>{lander.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
