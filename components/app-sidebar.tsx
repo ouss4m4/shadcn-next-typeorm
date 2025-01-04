@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Image from 'next/image';
 
@@ -13,10 +14,11 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 // This is sample data.
 const data = {
-  versions: ['1.0.1', '1.1.0-alpha', '2.0.0-beta1'],
   navMain: [
     {
       title: 'Campaigns',
@@ -26,11 +28,25 @@ const data = {
         {
           title: 'Campaigns',
           url: '/campaigns',
-          isActive: true,
         },
         {
           title: 'Lander',
           url: '/landers',
+        },
+      ],
+    },
+    {
+      title: 'Clients',
+      url: '/clients',
+
+      items: [
+        {
+          title: 'Clients',
+          url: '/clients',
+        },
+        {
+          title: 'Users',
+          url: '/users',
         },
       ],
     },
@@ -52,16 +68,27 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  const getIsItemActive = ({
+    url,
+  }: {
+    title: string;
+    url: string;
+  }): boolean => {
+    return pathname.includes(url);
+  };
   return (
     <Sidebar {...props}>
       <SidebarHeader className="my-4 flex items-center">
-        <Image
-          src="/adwora.svg"
-          alt="Logo"
-          width={140} // Set the width of the image
-          height={30} // Set the height of the image
-          priority // Optional: prioritize this image for faster loading
-        />
+        <Link href="/">
+          <Image
+            src="/adwora.svg"
+            alt="Logo"
+            width={140}
+            height={30}
+            priority
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -72,8 +99,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                    <SidebarMenuButton asChild isActive={getIsItemActive(item)}>
+                      <Link href={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

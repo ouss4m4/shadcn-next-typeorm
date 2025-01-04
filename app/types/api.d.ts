@@ -15,7 +15,7 @@ export enum ClientType {
   Advertiser = 2,
 }
 
-export interface IAdvertiser {
+export interface IClient {
   id: number;
   name: string;
   type: ClientType;
@@ -26,6 +26,19 @@ export interface IAdvertiser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// IPublisher is an IClient with a specific type
+export interface IPublisher extends IClient {
+  type: ClientType.Publisher;
+}
+
+// IAdvertiser is an IClient with a specific type
+export interface IAdvertiser extends IClient {
+  type: ClientType.Advertiser;
+}
+
+// Example of using a discriminated union
+export type Client = IPublisher | IAdvertiser;
 
 export interface ILander {
   id: number;
