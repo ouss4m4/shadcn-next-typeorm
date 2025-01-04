@@ -50,7 +50,7 @@ export default async function CampaignsList() {
                     {cmp.lander.name}
                   </Link>
                 </TableCell>
-                <TableCell>{cmp.isActive}</TableCell>
+                <TableCell>{cmp.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
