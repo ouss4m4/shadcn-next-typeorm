@@ -23,20 +23,31 @@ import {
 export default function LanderSelect({
   formControl,
   name,
+  clientId = undefined,
+  status = '',
 }: {
   formControl: any;
-  name: any;
+  name: string;
+  clientId?: number;
+  status: string;
 }) {
   const [landers, setLanders] = useState<ILander[]>([]);
+  let url = `/landers?`;
+  if (clientId) {
+    url += `&clientId=${clientId}`;
+  }
 
+  if (status) {
+    url += `&status=${status}`;
+  }
   useEffect(() => {
     const fetchLanders = async () => {
-      const data = await fetchApi<ILander[]>('/landers');
+      const data = await fetchApi<ILander[]>(url);
       setLanders(data);
     };
 
     fetchLanders();
-  }, []); //
+  }, [url]); //
 
   return (
     <FormField

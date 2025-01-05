@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createCampaignSchema } from './CreateCampaignSchema';
@@ -30,6 +30,10 @@ export default function CreateCampaignForm() {
       countries: [1], // array of ids
       isActive: false,
     },
+  });
+  const advertiserId = useWatch({
+    control: form.control,
+    name: 'advertiserId',
   });
 
   async function onSubmit(values: z.infer<typeof createCampaignSchema>) {
@@ -63,7 +67,12 @@ export default function CreateCampaignForm() {
           )}
         />
         <AdvertiserSelect formControl={form.control} name="advertiserId" />
-        <LanderSelect formControl={form.control} name="landerId" />
+        <LanderSelect
+          formControl={form.control}
+          name="landerId"
+          clientId={advertiserId}
+          status="1"
+        />
         <CountrySelect formControl={form.control} name="countries" />
         <Button type="submit">Submit</Button>
       </form>
