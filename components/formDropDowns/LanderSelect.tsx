@@ -9,7 +9,7 @@ import { Control } from 'react-hook-form';
 export default function LanderSelect({
   formControl,
   name,
-  clientId = undefined,
+  clientId,
   status = '',
   showLabel = true,
 }: {
@@ -17,7 +17,7 @@ export default function LanderSelect({
   formControl: Control<any>;
   name: string;
   clientId?: number;
-  status: string;
+  status?: string;
   showLabel?: boolean;
 }) {
   const [landers, setLanders] = useState<ILander[]>([]);
