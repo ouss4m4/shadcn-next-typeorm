@@ -4,26 +4,8 @@ import { IAdvertiser } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import DropDown from '../drop-down';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
-
-/**
- *
- * @returns ShadCn Dropdown that loads its own clients list
- */
 export default function AdvertiserSelect({
   formControl,
   name = 'advertiserId',
@@ -44,36 +26,13 @@ export default function AdvertiserSelect({
   }, []);
 
   return (
-    <FormField
-      control={formControl}
+    <DropDown
+      formControl={formControl}
       name={name}
-      render={({ field }) => (
-        <FormItem>
-          {showLabel && <FormLabel>Advertiser</FormLabel>}
-          <Select
-            onValueChange={(value) => field.onChange(Number(value))}
-            defaultValue={field.value?.toString()}
-            value={field.value?.toString()}
-          >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder="Select an Advertiser" />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {advertisers.map((advertiser) => (
-                <SelectItem
-                  key={advertiser.id}
-                  value={advertiser.id.toString()}
-                >
-                  {advertiser.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormMessage />
-        </FormItem>
-      )}
+      placeHolder="Select an Advertiser"
+      label="Advertiser"
+      itemsList={advertisers}
+      showLabel={showLabel}
     />
   );
 }
