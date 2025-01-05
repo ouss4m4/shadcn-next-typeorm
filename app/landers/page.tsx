@@ -10,7 +10,7 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { fetchApi } from '../utils/api';
-import { ILander } from '../types/types';
+import { ILander } from '../shared/types';
 
 export default async function LandersList() {
   const landers = await fetchApi<ILander[]>('/landers');

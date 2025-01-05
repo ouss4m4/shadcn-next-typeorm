@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { ICountry } from '@/app/types/types';
+import { ICountry } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 
 import React, { useEffect, useState } from 'react';
