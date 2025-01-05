@@ -96,14 +96,3 @@ export default function CountrySelect({
     />
   );
 }
-
-{
-  /* <Select>
-<SelectTrigger className="w-[280px]">
-  <SelectValue placeholder="Select a timezone" />
-</SelectTrigger>
-<SelectContent>
-    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem> 
-</SelectContent>
-</Select> */
-}

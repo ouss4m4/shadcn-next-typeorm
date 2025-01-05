@@ -14,8 +14,8 @@ export default async function CampaignsList({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { advId = '', status = '' } = await searchParams;
-  const params = formatSeachQuery({ advId, status });
+  const { advId = '', status = '', country = '' } = await searchParams;
+  const params = formatSeachQuery({ advId, status, country });
 
   const campaigns = await fetchApi<ICampaign[]>(
     `/campaigns?${params.toString()}`,

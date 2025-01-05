@@ -1,38 +1,36 @@
 'use client';
 
+import { formatSeachQuery } from '@/app/shared/helpers';
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
+import CountrySelectSingle from '@/components/formDropDowns/CountrySelectSingle';
+import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 export interface ICampaignListFilter {
-  advId: string;
-  status: string;
+  advId?: string;
+  status?: string;
+  lander?: string;
+  country?: string;
 }
 
 export default function CampaignsFilter() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const form = useForm<ICampaignListFilter>({
     defaultValues: {
       status: '',
       advId: '',
+      lander: '',
+      country: '',
     },
   });
 
   const onSubmit = (data: ICampaignListFilter) => {
-    const params = new URLSearchParams(searchParams?.toString());
-
-    // Update or add query parameters
-    if (data.advId) params.set('advId', data.advId);
-    else params.delete('advId');
-
-    if (data.status) params.set('status', data.status);
-    else params.delete('status');
-
-    // Navigate with updated query params
+    const { advId = '', lander = '', status = '', country = '' } = data;
+    const params = formatSeachQuery({ advId, status, lander, country });
     router.push(`/campaigns?${params.toString()}`);
   };
 
@@ -50,6 +48,19 @@ export default function CampaignsFilter() {
         <AdvertiserSelect
           formControl={form.control}
           name="advId"
+          showLabel={false}
+        />
+
+        <LanderSelect
+          formControl={form.control}
+          name="lander"
+          showLabel={false}
+          clientId={Number(form.getValues().advId) ?? 0}
+        />
+
+        <CountrySelectSingle
+          formControl={form.control}
+          name="country"
           showLabel={false}
         />
 
