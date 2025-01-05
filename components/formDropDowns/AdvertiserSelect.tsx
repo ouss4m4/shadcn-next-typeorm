@@ -27,9 +27,11 @@ import {
 export default function AdvertiserSelect({
   formControl,
   name = 'advertiserId',
+  showLabel = true,
 }: {
   formControl: Control<any>;
   name: string;
+  showLabel?: boolean;
 }) {
   const [advertisers, setAdvertisers] = useState<IAdvertiser[]>([]);
   useEffect(() => {
@@ -47,10 +49,11 @@ export default function AdvertiserSelect({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Advertiser</FormLabel>
+          {showLabel && <FormLabel>Advertiser</FormLabel>}
           <Select
             onValueChange={(value) => field.onChange(Number(value))}
             defaultValue={field.value?.toString()}
+            value={field.value?.toString()}
           >
             <FormControl>
               <SelectTrigger>

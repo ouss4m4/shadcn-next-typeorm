@@ -1,6 +1,7 @@
 'use client';
 
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
+import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -43,15 +44,23 @@ export default function CampaignsFilter() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex items-center space-x-4"
+        onChange={form.handleSubmit(onSubmit)}
+        className="flex items-center space-x-2"
       >
-        <AdvertiserSelect formControl={form.control} name="advId" />
+        <AdvertiserSelect
+          formControl={form.control}
+          name="advId"
+          showLabel={false}
+        />
 
-        <button type="submit">Apply Filters</button>
-        <button type="button" onClick={onReset}>
+        <Button
+          variant="outline"
+          type="button"
+          className="hover:bg-primary hover:text-secondary"
+          onClick={onReset}
+        >
           Reset
-        </button>
+        </Button>
       </form>
     </Form>
   );
