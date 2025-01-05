@@ -11,6 +11,7 @@ import Link from 'next/link';
 import React from 'react';
 import { fetchApi } from '../utils/api';
 import { ILander } from '../shared/types';
+import { Button } from '@/components/ui/button';
 
 export default async function LandersList() {
   const landers = await fetchApi<ILander[]>('/landers');
@@ -20,7 +21,9 @@ export default async function LandersList() {
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="flex justify-between">
           <h1 className="text-lg">Landers List</h1>
-          <Link href="/landers/create">Create Lander</Link>
+          <Button asChild>
+            <Link href="/landers/create">Create Lander</Link>
+          </Button>
         </div>
 
         <Table>

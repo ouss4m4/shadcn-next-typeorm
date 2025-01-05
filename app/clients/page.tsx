@@ -11,6 +11,7 @@ import {
   Table,
 } from '@/components/ui/table';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default async function ClientsList() {
   const clients = await fetchApi<IClient[]>('/clients');
@@ -20,7 +21,9 @@ export default async function ClientsList() {
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="flex justify-between">
           <h1 className="text-lg">Clients List</h1>
-          <Link href="/clients/create">Create Client</Link>
+          <Button asChild>
+            <Link href="/clients/create">Create Client</Link>
+          </Button>
         </div>
 
         <Table>
