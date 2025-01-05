@@ -1,35 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { ILander } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 
 import React, { useEffect, useState } from 'react';
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from '../ui/form';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '../ui/select';
+import DropDown from '../drop-down';
+import { Control } from 'react-hook-form';
 
 export default function LanderSelect({
   formControl,
   name,
   clientId = undefined,
   status = '',
+  showLabel = true,
 }: {
-  formControl: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formControl: Control<any>;
   name: string;
   clientId?: number;
   status: string;
+  showLabel?: boolean;
 }) {
   const [landers, setLanders] = useState<ILander[]>([]);
   let url = `/landers?`;
@@ -50,34 +39,13 @@ export default function LanderSelect({
   }, [url]); //
 
   return (
-    <FormField
-      control={formControl}
+    <DropDown
+      formControl={formControl}
       name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Lander</FormLabel>
-          <Select
-            onValueChange={(value) => field.onChange(Number(value))}
-            defaultValue={field.value?.toString()}
-            value={field.value?.toString()}
-          >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a Lander" />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {landers.map((lander) => (
-                <SelectItem key={lander.id} value={lander.id.toString()}>
-                  {lander.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormDescription>Select a Lander</FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
+      placeHolder="Select a Lander"
+      label="Landers"
+      itemsList={landers}
+      showLabel={showLabel}
     />
   );
 }
