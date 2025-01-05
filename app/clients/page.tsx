@@ -1,6 +1,6 @@
 import React from 'react';
 import { fetchApi } from '../utils/api';
-import { IClient } from '../types/types';
+import { IClient } from '../shared/types';
 import {
   TableCaption,
   TableHeader,

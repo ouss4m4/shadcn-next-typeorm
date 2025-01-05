@@ -1,6 +1,6 @@
 'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IAdvertiser } from '@/app/types/types';
+import { IAdvertiser } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';

@@ -1,4 +1,4 @@
-import { ClientType } from '../../types/types';
+import { ClientType } from '../../shared/types';
 import { z } from 'zod';
 
 export const createClientSchema = z.object({
