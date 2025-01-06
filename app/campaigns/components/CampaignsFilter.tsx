@@ -6,7 +6,7 @@ import CountrySelectSingle from '@/components/formDropDowns/CountrySelectSingle'
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 export interface ICampaignListFilter {
@@ -18,13 +18,14 @@ export interface ICampaignListFilter {
 
 export default function CampaignsFilter() {
   const router = useRouter();
+  const params = useSearchParams();
 
   const form = useForm<ICampaignListFilter>({
     defaultValues: {
-      status: '',
-      advId: '',
-      lander: '',
-      country: '',
+      status: params.get('status') ?? '',
+      advId: params.get('advId') ?? '',
+      lander: params.get('lander') ?? '',
+      country: params.get('country') ?? '',
     },
   });
 
@@ -37,8 +38,15 @@ export default function CampaignsFilter() {
   const onReset = () => {
     // Reset the form values and clear the URL params
     form.reset();
+
+    // Manually reset the dropdown values to reflect the form reset to children
+    form.setValue('status', '');
+    form.setValue('advId', '');
+    form.setValue('lander', '');
+    form.setValue('country', '');
     router.push('/campaigns');
   };
+
   return (
     <Form {...form}>
       <form
