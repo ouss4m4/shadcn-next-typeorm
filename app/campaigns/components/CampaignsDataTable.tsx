@@ -1,8 +1,7 @@
 'use client';
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
-import { ICampaign } from '@/app/shared/types';
+import { CellContext, ColumnDef } from '@tanstack/react-table';
+import { ICampaign, ICountry } from '@/app/shared/types';
 import { DataTable } from '@/components/ui/data-table';
 import {
   DropdownMenu,
@@ -16,6 +15,29 @@ import { MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CampaignsDataTable({ data }: { data: ICampaign[] }) {
+  const renderCountriesCell = ({
+    row,
+  }: CellContext<ICampaign, unknown>): React.JSX.Element => {
+    const countries: ICountry[] = row.getValue('countries');
+    if (countries.length == 1) {
+      return <div>{countries[0].niceName}</div>;
+    }
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <div>{countries.length} countries</div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Countries</DropdownMenuLabel>
+          {countries.map((cnt) => (
+            <DropdownMenuItem key={cnt.id + row.id}>
+              {cnt.niceName}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
   const columns: ColumnDef<ICampaign>[] = [
     {
       accessorKey: 'id',
@@ -32,6 +54,12 @@ export default function CampaignsDataTable({ data }: { data: ICampaign[] }) {
     {
       accessorFn: (campaign) => campaign.lander.name,
       header: 'Lander',
+    },
+    {
+      id: 'countries',
+      accessorFn: (campaign) => campaign.countries,
+      header: 'Country',
+      cell: renderCountriesCell,
     },
     {
       accessorKey: 'status',

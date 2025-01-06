@@ -5,6 +5,7 @@ export interface ICampaign {
   advertiser: IAdvertiser;
   landerId: number;
   lander: ILander;
+  countries: ICountry[];
   status: number;
   createdAt: Date;
   updatedAt: Date;
