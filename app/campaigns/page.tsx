@@ -6,8 +6,8 @@ import { ICampaign } from '../shared/types';
 
 import CampaignsFilter from './components/CampaignsFilter';
 import { formatSeachQuery } from '../shared/helpers';
-import CampaignsTable from './components/CampaignsTable';
 import { Button } from '@/components/ui/button';
+import CampaignsDataTable from './components/CampaignsDataTable';
 
 export default async function CampaignsList({
   searchParams,
@@ -33,7 +33,7 @@ export default async function CampaignsList({
         <div className="my-4">
           <CampaignsFilter />
         </div>
-        <CampaignsTable campaigns={campaigns} />
+        <CampaignsDataTable data={campaigns} />
       </div>
     </>
   );
