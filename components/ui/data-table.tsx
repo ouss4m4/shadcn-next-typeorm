@@ -17,14 +17,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from './button';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   rowsCount: number;
   pageSize?: number;
+  pageNumber: string;
+  onPageChange: (page: number) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -32,28 +32,15 @@ export function DataTable<TData, TValue>({
   data,
   rowsCount,
   pageSize = 10,
+  pageNumber,
+  onPageChange,
 }: DataTableProps<TData, TValue>) {
-  const router = useRouter();
-  const [page, setPage] = useState<number>(1);
+  const page = Number(pageNumber);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handlePagination = (pageNum: number) => {
-    const query = new URLSearchParams(window.location.search);
-    query.set('page', pageNum.toString());
-    router.push(`/campaigns?${query}`);
-    setPage(pageNum);
-  };
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const initialPage = parseInt(query.get('page') || '1', 10);
-    setPage(initialPage);
-  }, []);
 
   const buildPaginationInfo = (): React.JSX.Element => {
     const safeRowsCount = Math.max(rowsCount, 0);
@@ -77,7 +64,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePagination(page - 1)}
+            onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
           >
             Previous
@@ -85,7 +72,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePagination(page + 1)}
+            onClick={() => onPageChange(page + 1)}
             disabled={page == maxPage}
           >
             Next

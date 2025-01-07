@@ -66,3 +66,13 @@ export interface ICountry {
   name: string;
   niceName: string;
 }
+
+export interface ICampaignsListState {
+  advId: string;
+  lander: string;
+  country: string;
+  status: string;
+  page: string;
+  sortColumn: string;
+  sortDirection: string;
+}
