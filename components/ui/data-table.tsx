@@ -4,6 +4,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -15,22 +16,84 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from './button';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  rowsCount: number;
+  pageSize?: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  rowsCount,
+  pageSize = 10,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
+  const [page, setPage] = useState<number>(1);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
+  const handlePagination = (pageNum: number) => {
+    const query = new URLSearchParams(window.location.search);
+    query.set('page', pageNum.toString());
+    router.push(`/campaigns?${query}`);
+    setPage(pageNum);
+  };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const initialPage = parseInt(query.get('page') || '1', 10);
+    setPage(initialPage);
+  }, []);
+
+  const buildPaginationInfo = (): React.JSX.Element => {
+    const safeRowsCount = Math.max(rowsCount, 0);
+    const maxPage = Math.ceil(safeRowsCount / pageSize);
+
+    if (safeRowsCount === 0) {
+      return <div className="p-2">No records to display.</div>;
+    }
+
+    const from = page > 1 ? (page - 1) * pageSize + 1 : 1;
+    const to = Math.min(page * pageSize, safeRowsCount);
+
+    return (
+      <div className="flex items-center justify-between p-2">
+        <div>
+          <span>Showing {from} </span>
+          <span>to {to} </span>
+          <span> total {rowsCount}</span>
+        </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePagination(page - 1)}
+            disabled={page <= 1}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePagination(page + 1)}
+            disabled={page == maxPage}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="rounded-md border">
       <Table>
@@ -75,6 +138,7 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+      {buildPaginationInfo()}
     </div>
   );
 }
