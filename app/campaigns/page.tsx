@@ -1,30 +1,53 @@
+'use client';
+
 import Link from 'next/link';
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchApi } from '../utils/api';
-import { CampaignsListResponse } from '../shared/types';
+import {
+  CampaignsListResponse,
+  ICampaign,
+  ICampaignsListState,
+} from '../shared/types';
 
-import CampaignsFilter from './components/CampaignsFilter';
-import { formatSeachQuery } from '../shared/helpers';
 import { Button } from '@/components/ui/button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createUrlParamsFromObject } from '../shared/helpers';
+import CampaignsFilter from './components/CampaignsFilter';
 import CampaignsDataTable from './components/CampaignsDataTable';
 
-export default async function CampaignsList({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}) {
-  const {
-    advId = '',
-    status = '',
-    country = '',
-    page = '',
-  } = await searchParams;
-  const params = formatSeachQuery({ advId, status, country, page });
+export default function CampaignsList() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const initialState = {
+    advId: searchParams.get('advID') ?? '',
+    country: searchParams.get('country') ?? '',
+    lander: searchParams.get('lander') ?? '',
+    page: searchParams.get('page') ?? '1',
+    sortColumn: searchParams.get('sortColumn') ?? '',
+    sortDirection: searchParams.get('sortDirection') ?? '',
+    status: searchParams.get('status') ?? '',
+  };
+  const [state, setState] = useState<ICampaignsListState>(initialState);
 
-  const response = await fetchApi<CampaignsListResponse>(
-    `/campaigns?${params.toString()}`,
-  );
+  const [data, setData] = useState<{ rows: ICampaign[]; rowsCount: number }>({
+    rows: [],
+    rowsCount: 0,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const params = createUrlParamsFromObject(state);
+      const response = await fetchApi<CampaignsListResponse>(
+        `/campaigns?${params.toString()}`,
+      );
+      setData({ rows: response.data, rowsCount: response.rowsCount });
+
+      // Update URL
+      router.push(`/campaigns?${params.toString()}`, { scroll: false });
+    };
+
+    fetchData();
+  }, [state]);
 
   return (
     <>
@@ -36,11 +59,16 @@ export default async function CampaignsList({
           </Button>
         </div>
         <div className="my-4">
-          <CampaignsFilter />
+          <CampaignsFilter
+            state={state}
+            onFiltersChange={(newState) => setState({ ...state, ...newState })}
+          />
         </div>
         <CampaignsDataTable
-          data={response.data}
-          rowsCount={response.rowsCount}
+          data={data.rows}
+          rowsCount={data.rowsCount}
+          state={state}
+          onFiltersChange={(newState) => setState({ ...state, ...newState })}
         />
       </div>
     </>

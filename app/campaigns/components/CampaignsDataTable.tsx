@@ -1,7 +1,7 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { CellContext, ColumnDef } from '@tanstack/react-table';
-import { CampaignsListResponse, ICampaign, ICountry } from '@/app/shared/types';
+import { ICampaign, ICampaignsListState, ICountry } from '@/app/shared/types';
 import { DataTable } from '@/components/ui/data-table';
 import {
   DropdownMenu,
@@ -11,13 +11,34 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CampaignsDataTable({
   data,
   rowsCount,
-}: CampaignsListResponse) {
+  state,
+  onFiltersChange,
+}: {
+  data: ICampaign[];
+  rowsCount: number;
+  state: ICampaignsListState;
+  onFiltersChange: (data: Partial<ICampaignsListState>) => void;
+}) {
+  const handleSortClick = (columnName: string) => {
+    const sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+    if (state.sortColumn === columnName) {
+      onFiltersChange({
+        sortDirection: state.sortDirection === 'asc' ? 'desc' : 'asc',
+      });
+      return;
+    }
+    onFiltersChange({ sortColumn: columnName, sortDirection });
+  };
+
+  const onPageChange = (pageNumber: number) =>
+    onFiltersChange({ page: pageNumber.toString() });
+
   const renderCountriesCell = ({
     row,
   }: CellContext<ICampaign, unknown>): React.JSX.Element => {
@@ -48,7 +69,20 @@ export default function CampaignsDataTable({
     },
     {
       accessorKey: 'name',
-      header: 'Name',
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => handleSortClick('name')}
+            className="px-0"
+          >
+            Name
+            <ArrowUpDown
+              className={`ml-2 h-4 w-4 ${state.sortColumn == 'name' ? 'text-primary' : ''}`}
+            />
+          </Button>
+        );
+      },
     },
     {
       accessorFn: (campaign) => campaign.advertiser.name,
@@ -104,5 +138,13 @@ export default function CampaignsDataTable({
     },
   ];
 
-  return <DataTable columns={columns} data={data} rowsCount={rowsCount} />;
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      rowsCount={rowsCount}
+      onPageChange={onPageChange}
+      pageNumber={state.page}
+    />
+  );
 }
