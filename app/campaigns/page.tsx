@@ -18,7 +18,7 @@ import CampaignsDataTable from './components/CampaignsDataTable';
 export default function CampaignsList() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const initialState = {
+  const initialState: ICampaignsListState = {
     advId: searchParams.get('advID') ?? '',
     country: searchParams.get('country') ?? '',
     lander: searchParams.get('lander') ?? '',
