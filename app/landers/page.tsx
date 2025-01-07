@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 
 export default async function LandersList() {
   const landers = await fetchApi<ILander[]>('/landers');
-  console.log(landers);
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

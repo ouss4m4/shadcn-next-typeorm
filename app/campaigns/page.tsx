@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import React from 'react';
 import { fetchApi } from '../utils/api';
-import { ICampaign } from '../shared/types';
+import { CampaignsListResponse } from '../shared/types';
 
 import CampaignsFilter from './components/CampaignsFilter';
 import { formatSeachQuery } from '../shared/helpers';
@@ -14,10 +14,15 @@ export default async function CampaignsList({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { advId = '', status = '', country = '' } = await searchParams;
-  const params = formatSeachQuery({ advId, status, country });
+  const {
+    advId = '',
+    status = '',
+    country = '',
+    page = '',
+  } = await searchParams;
+  const params = formatSeachQuery({ advId, status, country, page });
 
-  const campaigns = await fetchApi<ICampaign[]>(
+  const response = await fetchApi<CampaignsListResponse>(
     `/campaigns?${params.toString()}`,
   );
 
@@ -33,7 +38,10 @@ export default async function CampaignsList({
         <div className="my-4">
           <CampaignsFilter />
         </div>
-        <CampaignsDataTable data={campaigns} />
+        <CampaignsDataTable
+          data={response.data}
+          rowsCount={response.rowsCount}
+        />
       </div>
     </>
   );

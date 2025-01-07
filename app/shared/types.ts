@@ -2,16 +2,18 @@ export interface ICampaign {
   id: number;
   name: string;
   advertiserId: number;
-  advertiser: IAdvertiser;
   landerId: number;
-  lander: ILander;
-  countries: ICountry[];
+  device: IDevice[];
   status: number;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date;
+  lander: ILander;
+  advertiser: Client;
+  countries: ICountry[];
 }
 
-export type CampaignsListResponse = ICampaign[];
+export type CampaignsListResponse = { data: ICampaign[]; rowsCount: number };
 
 export enum ClientType {
   Publisher = 1,
@@ -30,6 +32,11 @@ export interface IClient {
   updatedAt: Date;
 }
 
+export interface IDevice {
+  id: number;
+  name: string;
+  slug: string;
+}
 // IPublisher is an IClient with a specific type
 export interface IPublisher extends IClient {
   type: ClientType.Publisher;

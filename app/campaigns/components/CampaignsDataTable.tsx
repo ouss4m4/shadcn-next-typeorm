@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { CellContext, ColumnDef } from '@tanstack/react-table';
-import { ICampaign, ICountry } from '@/app/shared/types';
+import { CampaignsListResponse, ICampaign, ICountry } from '@/app/shared/types';
 import { DataTable } from '@/components/ui/data-table';
 import {
   DropdownMenu,
@@ -14,7 +14,10 @@ import { Button } from '@/components/ui/button';
 import { MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
-export default function CampaignsDataTable({ data }: { data: ICampaign[] }) {
+export default function CampaignsDataTable({
+  data,
+  rowsCount,
+}: CampaignsListResponse) {
   const renderCountriesCell = ({
     row,
   }: CellContext<ICampaign, unknown>): React.JSX.Element => {
@@ -89,7 +92,6 @@ export default function CampaignsDataTable({ data }: { data: ICampaign[] }) {
                   className="cursor-pointer"
                   href={`campaigns/${campaign.id}/edit`}
                 >
-                  {' '}
                   Edit
                 </Link>
               </DropdownMenuItem>
@@ -102,5 +104,5 @@ export default function CampaignsDataTable({ data }: { data: ICampaign[] }) {
     },
   ];
 
-  return <DataTable columns={columns} data={data} />;
+  return <DataTable columns={columns} data={data} rowsCount={rowsCount} />;
 }
