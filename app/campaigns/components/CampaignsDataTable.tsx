@@ -18,6 +18,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
+import StatusLabel from '@/components/ui/status-label';
+import { CampaignStatusType } from '@/app/shared/enums';
 
 export default function CampaignsDataTable({
   data,
@@ -179,8 +181,10 @@ export default function CampaignsDataTable({
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => {
-        const status = row.getValue('status');
-        return <div>{status == 1 ? 'Active' : 'Paused'}</div>;
+        const status = row.getValue<number>('status');
+        return (
+          <StatusLabel statusKey={status} statusMap={CampaignStatusType} />
+        );
       },
     },
     {

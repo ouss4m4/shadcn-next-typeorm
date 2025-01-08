@@ -77,3 +77,16 @@ export interface ICampaignsListState {
   sortBy: string;
   order: string;
 }
+
+export type statusProps = {
+  text: string;
+  slug: string;
+  color: string;
+};
+
+export type StatusMap = Record<number, statusProps>;
+
+export interface StatusLabelProps<T extends StatusMap> {
+  statusKey: keyof T;
+  statusMap: T;
+}
