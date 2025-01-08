@@ -31,14 +31,14 @@ export default function CampaignsDataTable({
   onFiltersChange: (data: Partial<ICampaignsListState>) => void;
 }) {
   const handleSortClick = (columnName: string) => {
-    const sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
-    if (state.sortColumn === columnName) {
+    const sortDirection = state.order === 'asc' ? 'desc' : 'asc';
+    if (state.sortBy === columnName) {
       onFiltersChange({
-        sortDirection: state.sortDirection === 'asc' ? 'desc' : 'asc',
+        order: state.order === 'asc' ? 'desc' : 'asc',
       });
       return;
     }
-    onFiltersChange({ sortColumn: columnName, sortDirection });
+    onFiltersChange({ sortBy: columnName, order: sortDirection });
   };
 
   const onPageChange = (pageNumber: number) =>
@@ -108,7 +108,7 @@ export default function CampaignsDataTable({
           >
             Name
             <ArrowUpDown
-              className={`ml-2 h-4 w-4 ${state.sortColumn == 'name' ? 'text-primary' : ''}`}
+              className={`ml-2 h-4 w-4 ${state.sortBy == 'name' ? 'text-primary' : ''}`}
             />
           </Button>
         );
