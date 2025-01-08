@@ -74,6 +74,6 @@ export interface ICampaignsListState {
   device: string;
   status: string;
   page: string;
-  sortColumn: string;
-  sortDirection: string;
+  sortBy: string;
+  order: string;
 }
