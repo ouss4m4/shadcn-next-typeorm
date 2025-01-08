@@ -26,7 +26,7 @@ export default function CampaignsList() {
     device: searchParams.get('device') ?? '',
     sortBy: searchParams.get('sortBy') ?? '',
     order: searchParams.get('order') ?? '',
-    status: searchParams.get('status') ?? '',
+    status: searchParams.get('status') ?? '0',
   };
   const [state, setState] = useState<ICampaignsListState>(initialState);
 

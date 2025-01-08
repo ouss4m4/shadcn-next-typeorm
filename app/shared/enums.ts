@@ -1,6 +1,6 @@
 import { StatusMap } from './types';
 
-export const CampaignStatusType: StatusMap = {
+export const CampaignStatusMap: StatusMap = {
   1: {
     text: 'Active',
     slug: 'active',
