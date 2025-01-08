@@ -19,6 +19,7 @@ import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import CountrySelect from '@/components/formDropDowns/CountrySelect';
 import { redirect } from 'next/navigation';
+import DeviceSelectCheckBox from '@/components/formDropDowns/DeviceSelectCheckbox';
 
 export default function CreateCampaignForm() {
   const form = useForm<z.infer<typeof createCampaignSchema>>({
@@ -28,6 +29,7 @@ export default function CreateCampaignForm() {
       advertiserId: undefined, // Match the type expected in your schema
       landerId: undefined,
       countries: [1], // array of ids
+      device: [],
       isActive: false,
     },
   });
@@ -74,6 +76,7 @@ export default function CreateCampaignForm() {
           status="1"
         />
         <CountrySelect formControl={form.control} name="countries" />
+        <DeviceSelectCheckBox formControl={form.control} name="device" />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
