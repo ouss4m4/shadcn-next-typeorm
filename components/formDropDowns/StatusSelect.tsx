@@ -24,22 +24,23 @@ export default function StatusSelect({
   formControl,
   name,
   showLabel = true,
+  excludeStatus = [],
 }: {
   statusMap: StatusMap;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formControl: Control<any>;
   name: string;
   showLabel?: boolean;
+  excludeStatus?: number[];
 }) {
-  const items: { id: number; name: string }[] = Object.entries(statusMap).map(
-    ([key, value]) => {
-      console.log(`${key} -> Color: ${value.color}, Text: ${value.text}`);
+  const items: { id: number; name: string }[] = Object.entries(statusMap)
+    .filter((item) => !excludeStatus.includes(+item[0]))
+    .map(([key, value]) => {
       return {
         id: Number(key),
         name: value.text,
       };
-    },
-  );
+    });
   return (
     <FormField
       control={formControl}
