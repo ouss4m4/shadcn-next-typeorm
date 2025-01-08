@@ -4,7 +4,7 @@ import { campaignSchema } from '@/app/campaigns/forms/CampaignSchema';
 import { fetchApi } from '@/app/utils/api';
 import { z } from 'zod';
 
-export async function createCampaignAction(
+export async function editCampaignAction(
   unsafeData: z.infer<typeof campaignSchema>,
 ): Promise<{ error: boolean; message?: string } | undefined> {
   const { success, data } = campaignSchema.safeParse(unsafeData);
@@ -12,8 +12,8 @@ export async function createCampaignAction(
     return { error: true };
   }
   try {
-    await fetchApi('/campaigns', {
-      method: 'POST',
+    await fetchApi(`/campaigns/${data.id}`, {
+      method: 'PATCH',
       body: JSON.stringify(data),
     });
   } catch (error) {
