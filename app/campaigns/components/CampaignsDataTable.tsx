@@ -1,7 +1,12 @@
 'use client';
 
 import { CellContext, ColumnDef } from '@tanstack/react-table';
-import { ICampaign, ICampaignsListState, ICountry } from '@/app/shared/types';
+import {
+  ICampaign,
+  ICampaignsListState,
+  ICountry,
+  IDevice,
+} from '@/app/shared/types';
 import { DataTable } from '@/components/ui/data-table';
 import {
   DropdownMenu,
@@ -62,6 +67,31 @@ export default function CampaignsDataTable({
       </DropdownMenu>
     );
   };
+
+  const renderDevicesCell = ({
+    row,
+  }: CellContext<ICampaign, unknown>): React.JSX.Element => {
+    const devices: IDevice[] = row.getValue('devices');
+    if (devices.length == 1) {
+      return <div>{devices[0].name}</div>;
+    }
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <div>{devices.length} devices</div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Devices</DropdownMenuLabel>
+          {devices.map((device) => (
+            <DropdownMenuItem key={device.id + row.id}>
+              {device.name}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
+
   const columns: ColumnDef<ICampaign>[] = [
     {
       accessorKey: 'id',
@@ -95,8 +125,14 @@ export default function CampaignsDataTable({
     {
       id: 'countries',
       accessorFn: (campaign) => campaign.countries,
-      header: 'Country',
+      header: 'Countries',
       cell: renderCountriesCell,
+    },
+    {
+      id: 'devices',
+      accessorFn: (campaign) => campaign.device,
+      header: 'Devices',
+      cell: renderDevicesCell,
     },
     {
       accessorKey: 'status',
