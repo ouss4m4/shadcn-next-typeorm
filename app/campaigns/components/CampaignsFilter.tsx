@@ -3,6 +3,7 @@
 import { ICampaignsListState } from '@/app/shared/types';
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
 import CountrySelectSingle from '@/components/formDropDowns/CountrySelectSingle';
+import DeviceSelect from '@/components/formDropDowns/DeviceSelect';
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -13,6 +14,7 @@ interface ICampaignListFilter {
   status?: string;
   lander?: string;
   country?: string;
+  device?: string;
 }
 
 export default function CampaignsFilter({
@@ -28,6 +30,7 @@ export default function CampaignsFilter({
       advId: state.advId,
       lander: state.lander,
       country: state.country,
+      device: state.device,
     },
   });
 
@@ -43,8 +46,15 @@ export default function CampaignsFilter({
     form.setValue('advId', '');
     form.setValue('lander', '');
     form.setValue('country', '');
+    form.setValue('device', '');
 
-    onFiltersChange({ advId: '', country: '', lander: '', status: '' });
+    onFiltersChange({
+      advId: '',
+      country: '',
+      lander: '',
+      status: '',
+      device: '',
+    });
   };
 
   return (
@@ -71,7 +81,11 @@ export default function CampaignsFilter({
           name="country"
           showLabel={false}
         />
-
+        <DeviceSelect
+          formControl={form.control}
+          name="device"
+          showLabel={false}
+        />
         <Button
           variant="outline"
           type="button"
