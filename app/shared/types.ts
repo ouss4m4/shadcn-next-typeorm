@@ -71,6 +71,7 @@ export interface ICampaignsListState {
   advId: string;
   lander: string;
   country: string;
+  device: string;
   status: string;
   page: string;
   sortColumn: string;

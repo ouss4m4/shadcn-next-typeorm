@@ -23,6 +23,7 @@ export default function CampaignsList() {
     country: searchParams.get('country') ?? '',
     lander: searchParams.get('lander') ?? '',
     page: searchParams.get('page') ?? '1',
+    device: searchParams.get('device') ?? '',
     sortColumn: searchParams.get('sortColumn') ?? '',
     sortDirection: searchParams.get('sortDirection') ?? '',
     status: searchParams.get('status') ?? '',
