@@ -35,7 +35,7 @@ export default function CampaignsFilter({
   });
 
   const onSubmit = (data: ICampaignListFilter) => {
-    onFiltersChange(data);
+    onFiltersChange({ ...data, page: '1' });
   };
 
   const onReset = () => {
@@ -54,6 +54,7 @@ export default function CampaignsFilter({
       lander: '',
       status: '',
       device: '',
+      page: '1',
     });
   };
 

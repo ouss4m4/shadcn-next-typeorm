@@ -95,7 +95,20 @@ export default function CampaignsDataTable({
   const columns: ColumnDef<ICampaign>[] = [
     {
       accessorKey: 'id',
-      header: 'ID',
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => handleSortClick('id')}
+            className="px-0"
+          >
+            ID
+            <ArrowUpDown
+              className={`ml-2 h-4 w-4 ${state.sortBy == 'id' ? 'text-primary' : ''}`}
+            />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: 'name',
@@ -115,12 +128,40 @@ export default function CampaignsDataTable({
       },
     },
     {
+      id: 'advertiser',
       accessorFn: (campaign) => campaign.advertiser.name,
-      header: 'Advertiser',
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => handleSortClick('advertiser')}
+            className="px-0"
+          >
+            Advertiser
+            <ArrowUpDown
+              className={`ml-2 h-4 w-4 ${state.sortBy == 'advertiser' ? 'text-primary' : ''}`}
+            />
+          </Button>
+        );
+      },
     },
     {
+      id: 'lander',
       accessorFn: (campaign) => campaign.lander.name,
-      header: 'Lander',
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => handleSortClick('lander')}
+            className="px-0"
+          >
+            Lander
+            <ArrowUpDown
+              className={`ml-2 h-4 w-4 ${state.sortBy == 'lander' ? 'text-primary' : ''}`}
+            />
+          </Button>
+        );
+      },
     },
     {
       id: 'countries',
