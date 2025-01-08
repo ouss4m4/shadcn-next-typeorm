@@ -1,10 +1,12 @@
 'use client';
 
+import { CampaignStatusMap } from '@/app/shared/enums';
 import { ICampaignsListState } from '@/app/shared/types';
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
 import CountrySelectSingle from '@/components/formDropDowns/CountrySelectSingle';
 import DeviceSelect from '@/components/formDropDowns/DeviceSelect';
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
+import StatusSelect from '@/components/formDropDowns/StatusSelect';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
@@ -42,7 +44,7 @@ export default function CampaignsFilter({
     // Reset the form values and clear the URL params
     form.reset();
     // Manually reset the dropdown values to reflect the form reset
-    form.setValue('status', '');
+    form.setValue('status', '0');
     form.setValue('advId', '');
     form.setValue('lander', '');
     form.setValue('country', '');
@@ -52,7 +54,7 @@ export default function CampaignsFilter({
       advId: '',
       country: '',
       lander: '',
-      status: '',
+      status: '0',
       device: '',
       page: '1',
     });
@@ -85,6 +87,12 @@ export default function CampaignsFilter({
         <DeviceSelect
           formControl={form.control}
           name="device"
+          showLabel={false}
+        />
+        <StatusSelect
+          statusMap={CampaignStatusMap}
+          formControl={form.control}
+          name="status"
           showLabel={false}
         />
         <Button
