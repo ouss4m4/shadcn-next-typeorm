@@ -1,11 +1,12 @@
 import { z } from 'zod';
 
 const deviceSchema = z.object({
-  id: z.union([z.literal(1), z.literal(2), z.literal(3)]),
-  name: z.enum(['Desktop', 'Mobile', 'Tablet']),
+  id: z.number(),
+  name: z.string(),
 });
 
-export const createCampaignSchema = z.object({
+export const campaignSchema = z.object({
+  id: z.number().optional(),
   name: z.string().min(1, 'Name is required'),
   advertiserId: z.number().int().positive('Invalid Advertiser Id'),
   landerId: z.number().int().positive('Invalid Lander Id'),
@@ -13,5 +14,5 @@ export const createCampaignSchema = z.object({
     .array(z.number().int().positive())
     .nonempty('At least one country is required'),
   device: z.array(deviceSchema).nonempty('At least one device is required'),
-  isActive: z.boolean(),
+  status: z.number().default(1),
 });

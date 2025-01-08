@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createCampaignSchema } from './CreateCampaignSchema';
+import { campaignSchema } from './CampaignSchema';
 import {
   Form,
   FormControl,
@@ -14,23 +14,25 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
 import LanderSelect from '@/components/formDropDowns/LanderSelect';
 import CountrySelect from '@/components/formDropDowns/CountrySelect';
 import { redirect } from 'next/navigation';
 import DeviceSelectCheckBox from '@/components/formDropDowns/DeviceSelectCheckbox';
+import { ICampaign } from '@/app/shared/types';
+import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
+import { editCampaignAction } from '@/app/server/actions/editCampaignAction';
 
-export default function CreateCampaignForm() {
-  const form = useForm<z.infer<typeof createCampaignSchema>>({
-    resolver: zodResolver(createCampaignSchema),
+export default function CampaignForm({ data }: { data?: ICampaign }) {
+  const form = useForm<z.infer<typeof campaignSchema>>({
+    resolver: zodResolver(campaignSchema),
     defaultValues: {
-      name: '',
-      advertiserId: undefined, // Match the type expected in your schema
-      landerId: undefined,
-      countries: [1], // array of ids
-      device: [],
-      isActive: false,
+      name: data?.name ?? '',
+      advertiserId: data?.advertiserId ?? undefined,
+      landerId: data?.landerId ?? undefined,
+      countries: data?.countries.map((cnt) => cnt.id) ?? [1], // array of ids
+      device: data?.device ?? [],
+      status: data?.status,
     },
   });
   const advertiserId = useWatch({
@@ -38,10 +40,17 @@ export default function CreateCampaignForm() {
     name: 'advertiserId',
   });
 
-  async function onSubmit(values: z.infer<typeof createCampaignSchema>) {
-    const data = await createCampaignAction(values);
-    if (data && data.error) {
+  async function onSubmit(values: z.infer<typeof campaignSchema>) {
+    let response = null;
+    if (data && data.id) {
+      response = await editCampaignAction({ ...values, id: data.id });
+    } else {
+      response = await createCampaignAction(values);
+    }
+
+    if (response && response.error) {
       form.setError('root', { message: 'an error happened, please try again' });
+      return;
     }
     redirect('/campaigns');
   }
