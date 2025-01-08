@@ -5,12 +5,12 @@ export interface ICampaign {
   landerId: number;
   device: IDevice[];
   status: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
   lander: ILander;
   advertiser: Client;
   countries: ICountry[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }
 
 export type CampaignsListResponse = { data: ICampaign[]; rowsCount: number };
