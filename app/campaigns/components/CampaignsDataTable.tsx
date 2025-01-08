@@ -184,6 +184,48 @@ export default function CampaignsDataTable({
       },
     },
     {
+      id: 'time',
+      accessorFn: (campaign) => campaign,
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => handleSortClick('updatedAt')}
+            className="px-0"
+          >
+            Date
+            <ArrowUpDown
+              className={`ml-2 h-4 w-4 ${state.sortBy == 'updatedAt' ? 'text-primary' : ''}`}
+            />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const createdAt = row.original.createdAt;
+        const updatedAt = row.original.updatedAt;
+
+        return (
+          <div className="flex flex-col">
+            <span className="text-xs">
+              {new Intl.DateTimeFormat('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+              }).format(new Date(createdAt))}
+            </span>
+            <span className="text-xs italic">
+              Updated:
+              {new Intl.DateTimeFormat('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+              }).format(new Date(updatedAt))}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
       id: 'actions',
       cell: ({ row }) => {
         const campaign = row.original;
