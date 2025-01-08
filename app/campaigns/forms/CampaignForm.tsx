@@ -22,6 +22,8 @@ import DeviceSelectCheckBox from '@/components/formDropDowns/DeviceSelectCheckbo
 import { ICampaign } from '@/app/shared/types';
 import { createCampaignAction } from '@/app/server/actions/createCampaignAction';
 import { editCampaignAction } from '@/app/server/actions/editCampaignAction';
+import StatusSelect from '@/components/formDropDowns/StatusSelect';
+import { CampaignStatusMap } from '@/app/shared/enums';
 
 export default function CampaignForm({ data }: { data?: ICampaign }) {
   const form = useForm<z.infer<typeof campaignSchema>>({
@@ -32,7 +34,7 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
       landerId: data?.landerId ?? undefined,
       countries: data?.countries.map((cnt) => cnt.id) ?? [1], // array of ids
       device: data?.device ?? [],
-      status: data?.status,
+      status: data?.status ?? 1,
     },
   });
   const advertiserId = useWatch({
@@ -86,6 +88,12 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
         />
         <CountrySelect formControl={form.control} name="countries" />
         <DeviceSelectCheckBox formControl={form.control} name="device" />
+        <StatusSelect
+          formControl={form.control}
+          name="status"
+          statusMap={CampaignStatusMap}
+          excludeStatus={[0, 5, 6]}
+        />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
