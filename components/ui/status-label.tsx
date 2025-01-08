@@ -9,7 +9,6 @@ const StatusLabel = ({
   statusMap: StatusMap;
 }) => {
   const status = statusMap[statusKey] as statusProps;
-  console.log(status);
   if (!status) {
     return <span className="text-gray-500">{`${statusKey.toString()}`}</span>;
   }

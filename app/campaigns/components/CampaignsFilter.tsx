@@ -37,27 +37,11 @@ export default function CampaignsFilter({
   });
 
   const onSubmit = (data: ICampaignListFilter) => {
-    onFiltersChange({ ...data, page: '1' });
+    onFiltersChange({ ...data, page: '1', sortBy: 'updatedAt', order: 'desc' });
   };
 
   const onReset = () => {
-    // Reset the form values and clear the URL params
     form.reset();
-    // Manually reset the dropdown values to reflect the form reset
-    form.setValue('status', '0');
-    form.setValue('advId', '');
-    form.setValue('lander', '');
-    form.setValue('country', '');
-    form.setValue('device', '');
-
-    onFiltersChange({
-      advId: '',
-      country: '',
-      lander: '',
-      status: '0',
-      device: '',
-      page: '1',
-    });
   };
 
   return (
