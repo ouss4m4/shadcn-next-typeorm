@@ -4,7 +4,7 @@ import { IDevice } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
-import DropDown from '../drop-down';
+import FormSelect from '../form-select';
 
 export default function DeviceSelect({
   formControl,
@@ -26,7 +26,7 @@ export default function DeviceSelect({
   }, []);
 
   return (
-    <DropDown
+    <FormSelect
       formControl={formControl}
       name={name}
       placeHolder="Select a Device"

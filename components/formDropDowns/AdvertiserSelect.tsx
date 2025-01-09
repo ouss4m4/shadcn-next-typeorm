@@ -4,7 +4,7 @@ import { IAdvertiser } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
-import DropDown from '../drop-down';
+import FormSelect from '../form-select';
 
 export default function AdvertiserSelect({
   formControl,
@@ -26,7 +26,7 @@ export default function AdvertiserSelect({
   }, []);
 
   return (
-    <DropDown
+    <FormSelect
       formControl={formControl}
       name={name}
       placeHolder="Select an Advertiser"

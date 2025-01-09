@@ -94,7 +94,13 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
           statusMap={CampaignStatusMap}
           excludeStatus={[0, 5, 6]}
         />
-        <Button type="submit">Submit</Button>
+        {form.formState.isSubmitting ? (
+          <Button disabled variant="outline" type="submit">
+            Submiting...
+          </Button>
+        ) : (
+          <Button type="submit">Submit</Button>
+        )}
       </form>
     </Form>
   );

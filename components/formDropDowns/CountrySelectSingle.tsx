@@ -4,7 +4,7 @@ import { ICountry } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
-import DropDown from '../drop-down';
+import FormSelect from '../form-select';
 
 export default function CountrySelectSingle({
   formControl,
@@ -26,7 +26,7 @@ export default function CountrySelectSingle({
     fetchCounries();
   }, []);
   return (
-    <DropDown
+    <FormSelect
       formControl={formControl}
       name={name}
       showLabel={showLabel}
