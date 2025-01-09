@@ -1,5 +1,5 @@
 export interface ICampaign {
-  id: number;
+  id?: number;
   name: string;
   advertiserId: number;
   landerId: number;
