@@ -1,20 +1,49 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import Link from 'next/link';
-import React from 'react';
-import { fetchApi } from '../utils/api';
-import { ILander } from '../shared/types';
-import { Button } from '@/components/ui/button';
+'use client';
 
-export default async function LandersList() {
-  const landers = await fetchApi<ILander[]>('/landers');
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { fetchApi } from '../utils/api';
+import {
+  ILander,
+  ILandersListState,
+  LandersListReponse,
+} from '../shared/types';
+import { Button } from '@/components/ui/button';
+import LandersDataTable from './components/LandersDataTable';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createUrlParamsFromObject } from '../shared/helpers';
+import LandersFilter from './components/LandersFilter';
+
+export default function LandersList() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [data, setData] = useState<{ rows: ILander[]; rowsCount: number }>({
+    rows: [],
+    rowsCount: 0,
+  });
+  const [listState, setListState] = useState<ILandersListState>({
+    advId: searchParams.get('page') ?? '',
+    page: searchParams.get('page') ?? '1',
+    sortBy: searchParams.get('sortBy') ?? 'updatedAt',
+    order: searchParams.get('order') ?? 'desc',
+    status: searchParams.get('status') ?? '0',
+  });
+
+  useEffect(() => {
+    const fetchLanders = async () => {
+      const params = createUrlParamsFromObject(
+        listState as Record<string, string>,
+      );
+      const result = await fetchApi<LandersListReponse>(
+        `/landers?${params.toString()}`,
+      );
+      setData({ rows: result.data, rowsCount: result.rowsCount });
+      // Update URL
+      router.push(`/landers?${params.toString()}`, { scroll: false });
+    };
+    fetchLanders();
+  }, [listState, router]);
+
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -24,34 +53,22 @@ export default async function LandersList() {
             <Link href="/landers/create">Create Lander</Link>
           </Button>
         </div>
-
-        <Table>
-          <TableCaption>Landers List.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>NAME</TableHead>
-              <TableHead>CLIENT</TableHead>
-              <TableHead>URL</TableHead>
-              <TableHead>STATUS</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {landers.map((lander) => (
-              <TableRow key={lander.id}>
-                <TableCell>{lander.id}</TableCell>
-                <TableCell className="font-medium">{lander.name}</TableCell>
-                <TableCell>
-                  <Link href={`clients/${lander.client.id}`}>
-                    {lander.client.name}
-                  </Link>
-                </TableCell>
-                <TableCell>{lander.url}</TableCell>
-                <TableCell>{lander.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="my-4">
+          <LandersFilter
+            state={listState}
+            onFiltersChange={(newState) =>
+              setListState({ ...listState, ...newState } as ILandersListState)
+            }
+          />
+        </div>
+        <LandersDataTable
+          data={data.rows}
+          rowsCount={data.rowsCount}
+          state={listState}
+          onFiltersChange={(newState) =>
+            setListState({ ...listState, ...newState } as ILandersListState)
+          }
+        />
       </div>
     </>
   );

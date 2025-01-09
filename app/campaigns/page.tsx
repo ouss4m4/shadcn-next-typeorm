@@ -37,7 +37,7 @@ export default function CampaignsList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const params = createUrlParamsFromObject(state);
+      const params = createUrlParamsFromObject(state as Record<string, string>);
       const response = await fetchApi<CampaignsListResponse>(
         `/campaigns?${params.toString()}`,
       );
@@ -48,7 +48,7 @@ export default function CampaignsList() {
     };
 
     fetchData();
-  }, [state]);
+  }, [state, router]);
 
   return (
     <>
@@ -62,14 +62,18 @@ export default function CampaignsList() {
         <div className="my-4">
           <CampaignsFilter
             state={state}
-            onFiltersChange={(newState) => setState({ ...state, ...newState })}
+            onFiltersChange={(newState) =>
+              setState({ ...state, ...newState } as ICampaignsListState)
+            }
           />
         </div>
         <CampaignsDataTable
           data={data.rows}
           rowsCount={data.rowsCount}
           state={state}
-          onFiltersChange={(newState) => setState({ ...state, ...newState })}
+          onFiltersChange={(newState) =>
+            setState({ ...state, ...newState } as ICampaignsListState)
+          }
         />
       </div>
     </>

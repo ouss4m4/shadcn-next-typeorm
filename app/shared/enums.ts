@@ -37,3 +37,21 @@ export const CampaignStatusMap: StatusMap = {
     color: '#00d2e7',
   },
 };
+
+export const LanderStatusMap: StatusMap = {
+  1: {
+    text: 'Active',
+    slug: 'active',
+    color: '#37DC18',
+  },
+  2: {
+    text: 'Inactive',
+    slug: 'inactive',
+    color: '#E9002F',
+  },
+  0: {
+    text: 'All',
+    slug: 'all',
+    color: '#00d2e7',
+  },
+};
