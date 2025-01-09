@@ -1,8 +1,6 @@
-import { ICampaignsListState } from './types';
-
-export const createUrlParamsFromObject = (
-  params: ICampaignsListState,
-): URLSearchParams => {
+export const createUrlParamsFromObject = (params: {
+  [key: string]: string;
+}): URLSearchParams => {
   const query = new URLSearchParams();
 
   for (const [key, value] of Object.entries(params)) {

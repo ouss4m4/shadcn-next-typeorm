@@ -14,7 +14,7 @@ export interface ICampaign {
 }
 
 export type CampaignsListResponse = { data: ICampaign[]; rowsCount: number };
-
+export type LandersListReponse = { data: ILander[]; rowsCount: number };
 export enum ClientType {
   Publisher = 1,
   Advertiser = 2,
@@ -55,9 +55,11 @@ export interface ILander {
   name: string;
   url: string;
   clientId: number;
-  client: Client;
+  advertiser: Client;
   status: true;
   createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }
 
 export interface ICountry {
@@ -76,6 +78,16 @@ export interface ICampaignsListState {
   page: string;
   sortBy: string;
   order: string;
+  [key: string]: string;
+}
+
+export interface ILandersListState {
+  advId: string;
+  status: string;
+  page: string;
+  sortBy: string;
+  order: string;
+  [key: string]: string;
 }
 
 export type statusProps = {

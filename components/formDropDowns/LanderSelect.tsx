@@ -23,7 +23,7 @@ export default function LanderSelect({
   const [landers, setLanders] = useState<ILander[]>([]);
   let url = `/landers?`;
   if (clientId) {
-    url += `&clientId=${clientId}`;
+    url += `&advId=${clientId}`;
   }
 
   if (status) {
@@ -31,8 +31,8 @@ export default function LanderSelect({
   }
   useEffect(() => {
     const fetchLanders = async () => {
-      const data = await fetchApi<ILander[]>(url);
-      setLanders(data);
+      const data = await fetchApi<{ data: ILander[] }>(url);
+      setLanders(data.data);
     };
 
     fetchLanders();

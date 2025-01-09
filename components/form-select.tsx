@@ -53,11 +53,12 @@ export default function FormSelect<T extends { id: number; name: string }>({
               children
             ) : (
               <SelectContent>
-                {itemsList.map((item) => (
-                  <SelectItem key={item.id} value={item.id.toString()}>
-                    {item.name}
-                  </SelectItem>
-                ))}
+                {itemsList &&
+                  itemsList.map((item) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             )}
           </Select>
