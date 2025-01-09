@@ -21,15 +21,17 @@ export interface IPlaceHolderProps<T extends { id: number; name: string }> {
   placeHolder: string;
   showLabel?: boolean;
   itemsList: Array<T>;
+  children?: React.JSX.Element;
 }
 
-export default function DropDown<T extends { id: number; name: string }>({
+export default function FormSelect<T extends { id: number; name: string }>({
   formControl,
   name,
   showLabel = true,
   placeHolder,
   label,
   itemsList,
+  children = undefined,
 }: IPlaceHolderProps<T>) {
   return (
     <FormField
@@ -47,13 +49,17 @@ export default function DropDown<T extends { id: number; name: string }>({
                 <SelectValue placeholder={placeHolder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent>
-              {itemsList.map((item) => (
-                <SelectItem key={item.id} value={item.id.toString()}>
-                  {item.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
+            {children ? (
+              children
+            ) : (
+              <SelectContent>
+                {itemsList.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            )}
           </Select>
           <FormMessage />
         </FormItem>

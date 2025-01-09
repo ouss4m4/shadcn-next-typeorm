@@ -3,7 +3,7 @@ import { ILander } from '@/app/shared/types';
 import { fetchApi } from '@/app/utils/api';
 
 import React, { useEffect, useState } from 'react';
-import DropDown from '../drop-down';
+import FormSelect from '../form-select';
 import { Control } from 'react-hook-form';
 
 export default function LanderSelect({
@@ -39,7 +39,7 @@ export default function LanderSelect({
   }, [url]); //
 
   return (
-    <DropDown
+    <FormSelect
       formControl={formControl}
       name={name}
       placeHolder="Select a Lander"
