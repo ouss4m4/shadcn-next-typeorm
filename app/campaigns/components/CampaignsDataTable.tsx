@@ -16,10 +16,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowUpDown } from 'lucide-react';
 import StatusLabel from '@/components/ui/status-label';
 import { CampaignStatusMap } from '@/app/shared/enums';
+import CampaignDataTableActionsCell from './CampaignDataTableActionsCell';
 
 export default function CampaignsDataTable({
   data,
@@ -232,29 +232,7 @@ export default function CampaignsDataTable({
       cell: ({ row }) => {
         const campaign = row.original;
 
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem asChild>
-                <Link
-                  className="cursor-pointer"
-                  href={`campaigns/${campaign.id}/edit`}
-                >
-                  Edit
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>Duplicate</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
+        return <CampaignDataTableActionsCell campaign={campaign} />;
       },
     },
   ];
