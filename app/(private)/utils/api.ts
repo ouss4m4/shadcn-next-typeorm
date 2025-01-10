@@ -12,7 +12,7 @@ export async function fetchApi<T>(
     'Content-Type': 'application/json',
     ...(options?.headers || {}),
   };
-  console.log(`${baseUrl}${url}`);
+
   const response = await fetch(`${baseUrl}${url}`, {
     ...options,
     headers,
@@ -20,7 +20,9 @@ export async function fetchApi<T>(
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+    const errorBody = await response.json();
+    console.error(errorBody);
+    throw new Error(errorBody.message);
   }
 
   return response.json();
