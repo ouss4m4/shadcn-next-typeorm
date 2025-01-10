@@ -47,7 +47,10 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
     if (data && data.id) {
       response = await editCampaignAction({ ...values, id: data.id });
     } else {
-      response = await createCampaignAction(values);
+      response = await createCampaignAction(
+        values,
+        localStorage.getItem('jwt') ?? '',
+      );
     }
 
     if (response && response.error) {

@@ -37,9 +37,12 @@ export default function CampaignsList() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const jwtToken = localStorage.getItem('jwt');
+      console.log(jwtToken);
       const params = createUrlParamsFromObject(state as Record<string, string>);
       const response = await fetchApi<CampaignsListResponse>(
         `/campaigns?${params.toString()}`,
+        { headers: { Authorization: `Bearer ${jwtToken}` } },
       );
       setData({ rows: response.data, rowsCount: response.rowsCount });
 
