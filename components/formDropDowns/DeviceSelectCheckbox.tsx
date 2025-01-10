@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { IDevice } from '@/app/shared/types';
-import { fetchApi } from '@/app/utils/api';
+import { IDevice } from '@/app/(private)/shared/types';
+import { fetchApi } from '@/app/(private)/utils/api';
 import { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
 import {

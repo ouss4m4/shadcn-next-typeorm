@@ -1,4 +1,4 @@
-import { StatusMap } from '@/app/shared/types';
+import { StatusMap } from '@/app/(private)/shared/types';
 import React from 'react';
 import {
   FormControl,
@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { CampaignStatusMap } from '@/app/shared/enums';
+import { CampaignStatusMap } from '@/app/(private)/shared/enums';
 
 export default function StatusSelect({
   statusMap,
