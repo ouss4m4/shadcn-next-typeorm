@@ -36,6 +36,7 @@ export function LoginForm() {
       );
     } else {
       localStorage.setItem('name', response?.name ?? 'John');
+      localStorage.setItem('jwt', response?.jwt ?? '');
       redirect('/');
     }
   }

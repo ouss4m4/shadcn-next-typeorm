@@ -3,14 +3,21 @@ import { fetchApi } from '@/app/(private)/utils/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import CampaignForm from '../../forms/CampaignForm';
+import { cookies } from 'next/headers';
 
 export default async function CampaignDuplicate({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('jwt')?.value ?? '';
   const id = (await params).id;
-  const source = await fetchApi<ICampaign>(`/campaigns/${id}`);
+  const source = await fetchApi<ICampaign>(`/campaigns/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   source.name = `${source.name} (Copy of #${id})`;
   delete source.id;
   return (
