@@ -1,6 +1,6 @@
 'use client';
-import { ILander } from '@/app/shared/types';
-import { fetchApi } from '@/app/utils/api';
+import { ILander } from '@/app/(private)/shared/types';
+import { fetchApi } from '@/app/(private)/utils/api';
 
 import React, { useEffect, useState } from 'react';
 import FormSelect from '../form-select';

@@ -1,4 +1,4 @@
-import { StatusMap, statusProps } from '@/app/shared/types';
+import { StatusMap, statusProps } from '@/app/(private)/shared/types';
 import React from 'react';
 
 const StatusLabel = ({
