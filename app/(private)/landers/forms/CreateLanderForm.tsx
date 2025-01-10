@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import AdvertiserSelect from '@/components/formDropDowns/AdvertiserSelect';
-import { createLanderAction } from '@/app/(private)/server/actions/createLanderAction';
+import { createLanderAction } from '@/app/server/actions/lander/createLanderAction';
 import { redirect } from 'next/navigation';
 
 export default function CreateLanderForm() {

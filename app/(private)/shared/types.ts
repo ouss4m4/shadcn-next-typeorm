@@ -102,3 +102,8 @@ export interface StatusLabelProps<T extends StatusMap> {
   statusKey: keyof T;
   statusMap: T;
 }
+
+export interface ILoginResponse {
+  jwt: string;
+  name: string;
+}

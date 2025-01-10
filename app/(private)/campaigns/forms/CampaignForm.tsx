@@ -20,8 +20,8 @@ import CountrySelect from '@/components/formDropDowns/CountrySelect';
 import { redirect } from 'next/navigation';
 import DeviceSelectCheckBox from '@/components/formDropDowns/DeviceSelectCheckbox';
 import { ICampaign } from '@/app/(private)/shared/types';
-import { createCampaignAction } from '@/app/(private)/server/actions/createCampaignAction';
-import { editCampaignAction } from '@/app/(private)/server/actions/editCampaignAction';
+import { createCampaignAction } from '@/app/server/actions/campaign/createCampaignAction';
+import { editCampaignAction } from '@/app/server/actions/campaign/editCampaignAction';
 import StatusSelect from '@/components/formDropDowns/StatusSelect';
 import { CampaignStatusMap } from '@/app/(private)/shared/enums';
 

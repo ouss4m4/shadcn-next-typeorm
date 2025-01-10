@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-
-import { UserAuthForm } from '../components/user-auth-form';
+import { LoginForm } from '../components/login-form';
 
 export const metadata: Metadata = {
   title: 'Authentication',
@@ -19,7 +18,7 @@ export default function Login() {
               Enter your email and password
             </p>
           </div>
-          <UserAuthForm type="login" />
+          <LoginForm />
           <p className="mt-2 px-8 text-center text-sm text-muted-foreground">
             Don&apos;t have an account? &nbsp;
             <Link

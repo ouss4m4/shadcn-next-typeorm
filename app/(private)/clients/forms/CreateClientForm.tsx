@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { createClientAction } from '@/app/(private)/server/actions/createClientAction';
+import { createClientAction } from '@/app/server/actions/client/createClientAction';
 import { redirect } from 'next/navigation';
 
 export default function CreateClientForm() {
