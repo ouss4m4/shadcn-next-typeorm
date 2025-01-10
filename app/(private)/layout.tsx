@@ -4,7 +4,6 @@ import '../globals.css';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import AppTopBar from '@/components/app-topbar';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
@@ -29,19 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <UserProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <AppTopBar />
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
-        </body>
-      </UserProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <AppTopBar />
+            {children}
+          </SidebarInset>
+        </SidebarProvider>
+      </body>
     </html>
   );
 }
