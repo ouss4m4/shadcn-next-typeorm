@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { loginSchema } from './userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginAction } from '@/app/server/actions/login/loginAction';
 import { redirect } from 'next/navigation';
+import { LoginAction } from '@/app/server/actions/auth/loginAction';
 
 export function LoginForm() {
   const {
@@ -18,7 +18,7 @@ export function LoginForm() {
     setError,
   } = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    mode: 'onChange',
+
     defaultValues: {
       email: '',
       password: '',
@@ -26,7 +26,6 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    // TODO: Create server Action that actually calls the API
     const response = await LoginAction(values);
     if (response?.error) {
       setError(
@@ -36,6 +35,7 @@ export function LoginForm() {
           : { message: 'Error logging in' },
       );
     } else {
+      localStorage.setItem('name', response?.name ?? 'John');
       redirect('/');
     }
   }

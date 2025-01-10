@@ -25,6 +25,7 @@ export async function LoginAction(
       path: '/',
       maxAge: 60 * 60 * 24,
     });
+
     return { error: false, name: result.name };
   } catch (error) {
     console.log(error);
