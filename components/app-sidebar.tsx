@@ -15,7 +15,7 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 // This is sample data.
 const data = {
@@ -68,7 +68,9 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = useRouter();
   const pathname = usePathname();
+
   const getIsItemActive = ({
     url,
   }: {
@@ -76,6 +78,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     url: string;
   }): boolean => {
     return pathname.includes(url);
+  };
+
+  const handleLogout = async () => {
+    document.cookie = 'token=; Max-Age=0; path=/;';
+    router.push('/login');
   };
   return (
     <Sidebar {...props}>
@@ -91,7 +98,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
@@ -110,6 +116,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
+        <SidebarMenuItem key="logout" className="mb-14 mt-auto">
+          <SidebarMenuButton onClick={handleLogout}>Logout</SidebarMenuButton>
+        </SidebarMenuItem>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
