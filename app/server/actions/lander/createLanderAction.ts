@@ -17,7 +17,7 @@ export async function createLanderAction(
       body: JSON.stringify(data),
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { error: true, message: 'Error submitting campaign' };
   }
 }

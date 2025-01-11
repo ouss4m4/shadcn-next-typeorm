@@ -62,8 +62,6 @@ export default function DeviceSelectCheckBox({
                             (item: any) => item.id == device.id,
                           )}
                           onCheckedChange={(checked) => {
-                            console.log(field);
-                            // console.log(value)
                             return checked
                               ? field.onChange([
                                   ...field.value,

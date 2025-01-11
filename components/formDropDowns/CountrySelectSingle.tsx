@@ -20,7 +20,6 @@ export default function CountrySelectSingle({
   useEffect(() => {
     const fetchCounries = async () => {
       const data = await fetchApi<ICountry[]>('/countries');
-      console.log(data);
       setCountries(data);
     };
     fetchCounries();
