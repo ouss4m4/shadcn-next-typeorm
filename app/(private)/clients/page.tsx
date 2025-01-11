@@ -1,5 +1,4 @@
 import React from 'react';
-import { fetchApi } from '../utils/api';
 import { IClient } from '../shared/types';
 import {
   TableCaption,
@@ -12,9 +11,30 @@ import {
 } from '@/components/ui/table';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { headers } from 'next/headers';
 
 export default async function ClientsList() {
-  const clients = await fetchApi<IClient[]>('/clients');
+  const incomingCookie = (await headers()).get('cookie') || '';
+
+  const clients: IClient[] = await fetch(
+    `${process.env.NEXT_URL}/api/clients`,
+    {
+      headers: {
+        cookie: incomingCookie,
+      },
+    },
+  )
+    .then(async (res) => {
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error?.error || 'An error occurred');
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.error(err);
+      return [];
+    });
 
   return (
     <>

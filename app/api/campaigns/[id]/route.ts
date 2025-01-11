@@ -1,11 +1,14 @@
 import { ICampaign } from '@/app/(private)/shared/types';
 import { fetchApi } from '@/app/(private)/utils/api';
 import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get('id');
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const id = (await params).id;
+
   if (!id) {
     return NextResponse.json({ error: 'ID is required' }, { status: 404 });
   }

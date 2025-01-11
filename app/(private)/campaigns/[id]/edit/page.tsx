@@ -2,16 +2,23 @@ import { ICampaign } from '@/app/(private)/shared/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import CampaignForm from '../../forms/CampaignForm';
-
+import { headers } from 'next/headers';
 export default async function EditCampaigns({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const incomingCookie = (await headers()).get('cookie') || '';
+
   const id = (await params).id;
-  const campaign: ICampaign = await fetch(`/api/campaigns/${id}`).then((res) =>
-    res.json(),
-  );
+  const campaign: ICampaign = await fetch(
+    `${process.env.NEXT_URL}/api/campaigns/${id}`,
+    {
+      headers: {
+        cookie: incomingCookie,
+      },
+    },
+  ).then((res) => res.json());
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
