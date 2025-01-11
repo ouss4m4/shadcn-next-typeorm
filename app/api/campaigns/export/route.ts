@@ -15,7 +15,6 @@ export async function GET(req: Request) {
     },
     'blob',
   );
-  // Forward headers and file response
 
   return new Response(blobResponse, {
     headers: {

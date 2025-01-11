@@ -54,10 +54,10 @@ export default function CampaignsList() {
     try {
       console.log('Querying export...');
       const params = createUrlParamsFromObject(state as Record<string, string>);
-      console.log(params.toString());
+      params.delete('page');
 
       // Fetch the export file
-      const resp = await fetch(`/api/campaigns/export?${params.toString()}`);
+      const resp = await fetch(`/api/campaigns/export`);
       if (!resp.ok) {
         throw new Error(`Export failed with status: ${resp.status}`);
       }
