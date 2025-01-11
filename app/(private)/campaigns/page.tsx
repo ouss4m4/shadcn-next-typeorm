@@ -17,7 +17,8 @@ import CampaignsDataTable from './components/CampaignsDataTable';
 export default function CampaignsList() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const initialState: ICampaignsListState = {
+
+  const [state, setState] = useState<ICampaignsListState>({
     advId: searchParams.get('advID') ?? '',
     country: searchParams.get('country') ?? '',
     lander: searchParams.get('lander') ?? '',
@@ -26,8 +27,7 @@ export default function CampaignsList() {
     sortBy: searchParams.get('sortBy') ?? 'updatedAt',
     order: searchParams.get('order') ?? 'desc',
     status: searchParams.get('status') ?? '0',
-  };
-  const [state, setState] = useState<ICampaignsListState>(initialState);
+  });
 
   const [data, setData] = useState<{ rows: ICampaign[]; rowsCount: number }>({
     rows: [],
@@ -50,14 +50,61 @@ export default function CampaignsList() {
     fetchData();
   }, [state, router]);
 
+  const handleExport = async () => {
+    try {
+      console.log('Querying export...');
+      const params = createUrlParamsFromObject(state as Record<string, string>);
+      console.log(params.toString());
+
+      // Fetch the export file
+      const resp = await fetch(`/api/campaigns/export?${params.toString()}`);
+      if (!resp.ok) {
+        throw new Error(`Export failed with status: ${resp.status}`);
+      }
+
+      // Create a Blob from the response
+      const blob = await resp.blob();
+
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+
+      // Set the download file name
+      const contentDisposition = resp.headers.get('Content-Disposition');
+      const filename = contentDisposition
+        ? contentDisposition.split('filename=')[1]?.replace(/"/g, '') ||
+          'download.csv'
+        : 'download.csv';
+      a.download = filename;
+
+      // Trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      console.log('Export complete.');
+    } catch (error) {
+      console.error('Export failed:', error);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="flex justify-between">
           <h1 className="text-lg">Campaigns List</h1>
-          <Button asChild>
-            <Link href="/campaigns/create">Create Campaign</Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleExport}>
+              EXPORT
+            </Button>
+            <Button asChild>
+              <Link href="/campaigns/create">Create Campaign</Link>
+            </Button>
+          </div>
         </div>
         <div className="my-4">
           <CampaignsFilter
