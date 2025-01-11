@@ -20,10 +20,10 @@ import CountrySelect from '@/components/formDropDowns/CountrySelect';
 import { redirect } from 'next/navigation';
 import DeviceSelectCheckBox from '@/components/formDropDowns/DeviceSelectCheckbox';
 import { ICampaign } from '@/app/(private)/shared/types';
-import { createCampaignAction } from '@/app/server/actions/campaign/createCampaignAction';
 import { editCampaignAction } from '@/app/server/actions/campaign/editCampaignAction';
 import StatusSelect from '@/components/formDropDowns/StatusSelect';
 import { CampaignStatusMap } from '@/app/(private)/shared/enums';
+import { createCampaignAction } from '@/app/server/actions/campaign/createCampaignAction';
 
 export default function CampaignForm({ data }: { data?: ICampaign }) {
   const form = useForm<z.infer<typeof campaignSchema>>({
@@ -47,10 +47,7 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
     if (data && data.id) {
       response = await editCampaignAction({ ...values, id: data.id });
     } else {
-      response = await createCampaignAction(
-        values,
-        localStorage.getItem('jwt') ?? '',
-      );
+      response = await createCampaignAction(values);
     }
 
     if (response && response.error) {

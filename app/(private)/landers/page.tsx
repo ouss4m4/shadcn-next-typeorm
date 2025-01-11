@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { fetchApi } from '../utils/api';
 import {
   ILander,
   ILandersListState,
@@ -34,9 +33,10 @@ export default function LandersList() {
       const params = createUrlParamsFromObject(
         listState as Record<string, string>,
       );
-      const result = await fetchApi<LandersListReponse>(
-        `/landers?${params.toString()}`,
-      );
+      const result: LandersListReponse = await fetch(
+        `/api/landers?${params.toString()}`,
+      ).then((res) => res.json());
+
       setData({ rows: result.data, rowsCount: result.rowsCount });
       // Update URL
       router.push(`/landers?${params.toString()}`, { scroll: false });

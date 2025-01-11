@@ -2,6 +2,7 @@
 
 import { campaignSchema } from '@/app/(private)/campaigns/forms/CampaignSchema';
 import { fetchApi } from '@/app/(private)/utils/api';
+import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 export async function editCampaignAction(
@@ -11,10 +12,13 @@ export async function editCampaignAction(
   if (!success) {
     return { error: true };
   }
+  const cookieStore = await cookies();
+  const jwtToken = cookieStore.get('jwt')?.value ?? '';
   try {
     await fetchApi(`/campaigns/${data.id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
+      headers: { Authorization: `Bearer ${jwtToken}` },
     });
   } catch (error) {
     console.log(error);

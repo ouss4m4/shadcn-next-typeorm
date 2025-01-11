@@ -1,6 +1,5 @@
 'use client';
 import { ILander } from '@/app/(private)/shared/types';
-import { fetchApi } from '@/app/(private)/utils/api';
 
 import React, { useEffect, useState } from 'react';
 import FormSelect from '../form-select';
@@ -21,7 +20,7 @@ export default function LanderSelect({
   showLabel?: boolean;
 }) {
   const [landers, setLanders] = useState<ILander[]>([]);
-  let url = `/landers?`;
+  let url = `/api/landers?`;
   if (clientId) {
     url += `&advId=${clientId}`;
   }
@@ -31,7 +30,9 @@ export default function LanderSelect({
   }
   useEffect(() => {
     const fetchLanders = async () => {
-      const data = await fetchApi<{ data: ILander[] }>(url);
+      const data: { data: ILander[] } = await fetch(url)
+        .then((res) => res.json())
+        .catch(console.error);
       setLanders(data.data);
     };
 
