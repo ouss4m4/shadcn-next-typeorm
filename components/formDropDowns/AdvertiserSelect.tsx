@@ -1,7 +1,6 @@
 'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IAdvertiser } from '@/app/(private)/shared/types';
-import { fetchApi } from '@/app/(private)/utils/api';
 import React, { useEffect, useState } from 'react';
 import { Control } from 'react-hook-form';
 import FormSelect from '../form-select';
@@ -18,8 +17,9 @@ export default function AdvertiserSelect({
   const [advertisers, setAdvertisers] = useState<IAdvertiser[]>([]);
   useEffect(() => {
     const fetchAdvertisers = async () => {
-      const data = await fetchApi<IAdvertiser[]>('/clients?type=2');
-      console.log(data);
+      const data: IAdvertiser[] = await fetch('/api/clients?type=2').then(
+        (res) => res.json(),
+      );
       setAdvertisers(data);
     };
     fetchAdvertisers();

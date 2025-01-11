@@ -81,7 +81,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   const handleLogout = async () => {
-    document.cookie = 'token=; Max-Age=0; path=/;';
+    document.cookie = 'jwt=; Max-Age=0; path=/;';
+    document.cookie = 'name=; Max-Age=0; path=/;';
     router.push('/login');
   };
   return (

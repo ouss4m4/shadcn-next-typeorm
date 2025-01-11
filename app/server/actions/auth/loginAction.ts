@@ -26,6 +26,12 @@ export async function LoginAction(
       path: '/',
       maxAge: 60 * 60 * 24,
     });
+    cookieStore.set('name', name, {
+      httpOnly: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 24,
+    });
     return { name: name, jwt };
   } catch (error) {
     console.log(error);
