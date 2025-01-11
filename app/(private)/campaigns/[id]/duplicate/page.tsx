@@ -2,16 +2,26 @@ import { ICampaign } from '@/app/(private)/shared/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import CampaignForm from '../../forms/CampaignForm';
-
+import { headers } from 'next/headers';
 export default async function CampaignDuplicate({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
+
+  // original request headers
+  const incomingHeaders = await headers();
+  const cookies = incomingHeaders.get('cookie') || '';
   const source: ICampaign = await fetch(
     `${process.env.NEXT_URL}/api/campaigns/${id}`,
+    {
+      headers: {
+        Cookie: cookies,
+      },
+    },
   ).then((res) => res.json());
+
   source.name = `${source.name} (Copy of #${id})`;
   delete source.id;
   return (

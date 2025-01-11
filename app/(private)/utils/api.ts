@@ -21,8 +21,7 @@ export async function fetchApi<T>(
 
   if (!response.ok) {
     const errorBody = await response.json();
-    console.error(errorBody);
-    throw new Error(errorBody.message);
+    throw new Error(JSON.stringify(errorBody));
   }
 
   return response.json();
