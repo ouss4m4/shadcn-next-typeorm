@@ -37,11 +37,9 @@ export default function LanderDataTableActionsCell({
     }
     setIsDeleting(true);
     try {
-      const result = await fetchApi(`/landers/${id}`, {
+      await fetchApi(`/landers/${id}`, {
         method: 'DELETE',
       });
-
-      console.log(result);
       setIsDeleting(false);
       setIsDialogOpen(false);
       router.push('/landers');

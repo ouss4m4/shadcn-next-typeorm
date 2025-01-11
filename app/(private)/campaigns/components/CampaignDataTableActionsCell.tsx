@@ -43,7 +43,6 @@ export default function CampaignDataTableActionsCell({
         method: 'DELETE',
       });
 
-      console.log(result);
       setIsDeleting(false);
       setIsDialogOpen(false);
     } catch (error) {

@@ -18,7 +18,7 @@ export async function RegisterAction(
     });
     return { error: false };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     let message = JSON.stringify(error);
     if (error instanceof Error) {
       message = error.message;

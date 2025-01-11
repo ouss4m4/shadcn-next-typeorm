@@ -30,9 +30,9 @@ export default function LanderSelect({
   }
   useEffect(() => {
     const fetchLanders = async () => {
-      const data: { data: ILander[] } = await fetch(url)
-        .then((res) => res.json())
-        .catch(console.error);
+      const data: { data: ILander[] } = await fetch(url).then((res) =>
+        res.json(),
+      );
       setLanders(data.data);
     };
 
