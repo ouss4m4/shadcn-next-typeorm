@@ -56,7 +56,7 @@ export default function FormSelect<T extends { id: number; name: string }>({
                 {itemsList &&
                   itemsList.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
+                      {item.name} (#{item.id})
                     </SelectItem>
                   ))}
               </SelectContent>
