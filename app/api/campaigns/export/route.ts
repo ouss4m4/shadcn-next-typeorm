@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   const jwtToken = cookieStore.get('jwt')?.value ?? '';
 
   const blobResponse = await fetchApi(
-    `/campaigns?${params.toString()}`,
+    `/campaigns/exports?${params.toString()}`,
     {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
