@@ -8,21 +8,21 @@ import { Control } from 'react-hook-form';
 export default function LanderSelect({
   formControl,
   name,
-  clientId,
+  advertiserId,
   status = '',
   showLabel = true,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formControl: Control<any>;
   name: string;
-  clientId?: number;
+  advertiserId?: number;
   status?: string;
   showLabel?: boolean;
 }) {
   const [landers, setLanders] = useState<ILander[]>([]);
   let url = `/api/landers?`;
-  if (clientId) {
-    url += `&advId=${clientId}`;
+  if (advertiserId) {
+    url += `&advId=${advertiserId}`;
   }
 
   if (status) {

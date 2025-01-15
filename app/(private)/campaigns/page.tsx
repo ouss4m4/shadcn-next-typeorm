@@ -19,7 +19,7 @@ export default function CampaignsList() {
   const router = useRouter();
 
   const [state, setState] = useState<ICampaignsListState>({
-    advId: searchParams.get('advID') ?? '',
+    advId: searchParams.get('advId') ?? '',
     country: searchParams.get('country') ?? '',
     lander: searchParams.get('lander') ?? '',
     page: searchParams.get('page') ?? '1',

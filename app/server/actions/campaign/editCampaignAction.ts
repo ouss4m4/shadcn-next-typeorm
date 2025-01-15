@@ -21,7 +21,10 @@ export async function editCampaignAction(
       headers: { Authorization: `Bearer ${jwtToken}` },
     });
   } catch (error) {
-    console.error(error);
-    return { error: true, message: 'Error submitting campaign' };
+    let message = 'Error submitting campaign';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return { error: true, message };
   }
 }
