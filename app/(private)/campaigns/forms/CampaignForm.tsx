@@ -51,7 +51,11 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
     }
 
     if (response && response.error) {
-      form.setError('root', { message: 'an error happened, please try again' });
+      let message = 'an error happened, please try again';
+      if (response.message) {
+        message = response.message;
+      }
+      form.setError('root', { message });
       return;
     }
     redirect('/campaigns');
@@ -83,7 +87,7 @@ export default function CampaignForm({ data }: { data?: ICampaign }) {
         <LanderSelect
           formControl={form.control}
           name="landerId"
-          clientId={advertiserId}
+          advertiserId={advertiserId}
           status="1"
         />
         <CountrySelect formControl={form.control} name="countries" />

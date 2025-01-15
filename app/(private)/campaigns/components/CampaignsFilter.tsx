@@ -60,7 +60,7 @@ export default function CampaignsFilter({
           formControl={form.control}
           name="lander"
           showLabel={false}
-          clientId={Number(form.getValues().advId) ?? 0}
+          advertiserId={Number(form.getValues().advId) ?? 0}
         />
 
         <CountrySelectSingle
