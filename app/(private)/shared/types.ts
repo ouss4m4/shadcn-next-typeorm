@@ -105,5 +105,5 @@ export interface StatusLabelProps<T extends StatusMap> {
 
 export interface ILoginResponse {
   jwt: string;
-  name: string;
+  isAdmin: boolean;
 }

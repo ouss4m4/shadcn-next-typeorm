@@ -35,8 +35,7 @@ export function LoginForm() {
           : { message: 'Error logging in' },
       );
     } else {
-      localStorage.setItem('name', response?.name ?? 'John');
-      localStorage.setItem('jwt', response?.jwt ?? '');
+      localStorage.setItem('isAdmin', `${response?.isAdmin ?? false}`);
       redirect('/');
     }
   }

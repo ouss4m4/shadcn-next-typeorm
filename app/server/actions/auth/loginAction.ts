@@ -8,13 +8,13 @@ import { z } from 'zod';
 
 export async function LoginAction(
   unsafeData: z.infer<typeof loginSchema>,
-): Promise<{ error?: boolean; message?: string; name?: string; jwt?: string }> {
+): Promise<{ error?: boolean; message?: string; isAdmin?: boolean }> {
   const { success, data } = loginSchema.safeParse(unsafeData);
   if (!success) {
     return { error: true };
   }
   try {
-    const { jwt, name } = await fetchApi<ILoginResponse>('/auth/login', {
+    const { jwt, isAdmin } = await fetchApi<ILoginResponse>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -26,13 +26,8 @@ export async function LoginAction(
       path: '/',
       maxAge: 60 * 60 * 24,
     });
-    cookieStore.set('name', name, {
-      httpOnly: process.env.NODE_ENV === 'production',
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 60 * 60 * 24,
-    });
-    return { name: name, jwt };
+
+    return { isAdmin: isAdmin };
   } catch (error) {
     console.error(error);
     let message = JSON.stringify(error);

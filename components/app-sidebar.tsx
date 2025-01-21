@@ -17,7 +17,6 @@ import {
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-// This is sample data.
 const data = {
   navMain: [
     {
@@ -38,7 +37,7 @@ const data = {
     {
       title: 'Clients',
       url: '/clients',
-
+      role: 'admin',
       items: [
         {
           title: 'Clients',
@@ -71,12 +70,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const getIsItemActive = ({
-    url,
-  }: {
-    title: string;
-    url: string;
-  }): boolean => {
+  const getIsItemActive = (url: string): boolean => {
     return pathname.includes(url);
   };
 
@@ -85,6 +79,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     document.cookie = 'name=; Max-Age=0; path=/;';
     router.push('/login');
   };
+
+  const isAdmin = localStorage.getItem('isAdmin') == 'true' ? true : false;
   return (
     <Sidebar {...props}>
       <SidebarHeader className="my-4 flex items-center">
@@ -99,24 +95,33 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={getIsItemActive(item)}>
-                      <Link href={item.url} prefetch={false}>
-                        {item.title}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        {data.navMain.map(({ title, items, role }) => {
+          if (role == 'admin' && !isAdmin) {
+            return;
+          }
+          return (
+            <SidebarGroup key={title}>
+              <SidebarGroupLabel>{title}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {items.map(({ title, url }) => (
+                    <SidebarMenuItem key={title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={getIsItemActive(url)}
+                      >
+                        <Link href={url} prefetch={false}>
+                          {title}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
+
         <SidebarMenuItem key="logout" className="mb-14 mt-auto">
           <SidebarMenuButton onClick={handleLogout}>Logout</SidebarMenuButton>
         </SidebarMenuItem>
