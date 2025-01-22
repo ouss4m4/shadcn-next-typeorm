@@ -105,5 +105,15 @@ export interface StatusLabelProps<T extends StatusMap> {
 
 export interface ILoginResponse {
   jwt: string;
-  isAdmin: boolean;
+}
+
+export interface IUserInfo {
+  id: number;
+  name: string;
+  email: string;
+  clientId: number;
+  role: string;
+  status: number;
+  createdAt: string;
+  updatedAt: string;
 }

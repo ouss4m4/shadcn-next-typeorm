@@ -80,7 +80,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     router.push('/login');
   };
 
-  const isAdmin = localStorage.getItem('isAdmin') == 'true' ? true : false;
   return (
     <Sidebar {...props}>
       <SidebarHeader className="my-4 flex items-center">
@@ -95,10 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        {data.navMain.map(({ title, items, role }) => {
-          if (role == 'admin' && !isAdmin) {
-            return;
-          }
+        {data.navMain.map(({ title, items }) => {
           return (
             <SidebarGroup key={title}>
               <SidebarGroupLabel>{title}</SidebarGroupLabel>

@@ -8,13 +8,13 @@ import { z } from 'zod';
 
 export async function LoginAction(
   unsafeData: z.infer<typeof loginSchema>,
-): Promise<{ error?: boolean; message?: string; isAdmin?: boolean }> {
+): Promise<{ error?: boolean; message?: string }> {
   const { success, data } = loginSchema.safeParse(unsafeData);
   if (!success) {
     return { error: true };
   }
   try {
-    const { jwt, isAdmin } = await fetchApi<ILoginResponse>('/auth/login', {
+    const { jwt } = await fetchApi<ILoginResponse>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -27,7 +27,7 @@ export async function LoginAction(
       maxAge: 60 * 60 * 24,
     });
 
-    return { isAdmin: isAdmin };
+    return { error: false };
   } catch (error) {
     console.error(error);
     let message = JSON.stringify(error);
