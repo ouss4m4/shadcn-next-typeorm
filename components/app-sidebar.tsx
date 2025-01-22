@@ -57,7 +57,7 @@ const data = {
         },
         {
           title: 'Traffic Sources',
-          url: '/traffic-source',
+          url: '/traffic-sources',
         },
         {
           title: 'Sub Sources',

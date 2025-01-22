@@ -12,7 +12,7 @@ const roleProtectedRoutes: Record<string, string[]> = {
   '/users': ['Admin'],
   '/traffic-sources': ['Publisher'],
   '/sub-sources': ['Publisher'],
-  '/placemets': ['Publisher'],
+  '/placements': ['Publisher'],
 };
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
