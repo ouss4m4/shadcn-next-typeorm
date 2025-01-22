@@ -32,6 +32,7 @@ export default function CreateLanderForm() {
     const data = await createLanderAction(values);
     if (data && data.error) {
       form.setError('root', { message: 'an error happened, please try again' });
+      return;
     }
     redirect('/landers');
   }

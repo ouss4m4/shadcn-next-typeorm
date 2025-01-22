@@ -16,13 +16,13 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useUserInfo } from '@/app/(private)/context/UserInfoContext';
 
 const data = {
   navMain: [
     {
       title: 'Campaigns',
-      url: '',
-
+      visibleTo: ['Advertiser'],
       items: [
         {
           title: 'Campaigns',
@@ -36,8 +36,6 @@ const data = {
     },
     {
       title: 'Clients',
-      url: '/clients',
-      role: 'admin',
       items: [
         {
           title: 'Clients',
@@ -50,8 +48,26 @@ const data = {
       ],
     },
     {
+      title: 'Tracking Links',
+      visibleTo: ['Publisher'],
+      items: [
+        {
+          title: 'Placements',
+          url: '/Placements',
+        },
+        {
+          title: 'Traffic Sources',
+          url: '/traffic-source',
+        },
+        {
+          title: 'Sub Sources',
+          url: '/sub-sources',
+        },
+      ],
+    },
+    {
       title: 'Billing',
-      url: '#',
+      visibleTo: ['Publisher', 'Advertiser'],
       items: [
         {
           title: 'Invoices',
@@ -69,7 +85,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
   const pathname = usePathname();
-
+  const userInfo = useUserInfo();
   const getIsItemActive = (url: string): boolean => {
     return pathname.includes(url);
   };
@@ -94,7 +110,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        {data.navMain.map(({ title, items }) => {
+        {data.navMain.map(({ title, items, visibleTo }) => {
+          if (
+            userInfo &&
+            userInfo.role != 'Admin' &&
+            !visibleTo?.includes(userInfo?.role)
+          ) {
+            return;
+          }
           return (
             <SidebarGroup key={title}>
               <SidebarGroupLabel>{title}</SidebarGroupLabel>
