@@ -53,7 +53,7 @@ const data = {
       items: [
         {
           title: 'Placements',
-          url: '/Placements',
+          url: '/placements',
         },
         {
           title: 'Traffic Sources',
