@@ -10,6 +10,7 @@ import StatusSelect from '@/components/formDropDowns/StatusSelect';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { useUserInfo } from '../../context/UserInfoContext';
 
 interface ICampaignListFilter {
   advId?: string;
@@ -26,6 +27,7 @@ export default function CampaignsFilter({
   state: ICampaignsListState;
   onFiltersChange: (data: Partial<ICampaignsListState>) => void;
 }) {
+  const userInfo = useUserInfo();
   const form = useForm<ICampaignListFilter>({
     defaultValues: {
       status: state.status,
@@ -50,11 +52,13 @@ export default function CampaignsFilter({
         onChange={form.handleSubmit(onSubmit)}
         className="flex items-center space-x-2"
       >
-        <AdvertiserSelect
-          formControl={form.control}
-          name="advId"
-          showLabel={false}
-        />
+        {userInfo?.role == 'Admin' && (
+          <AdvertiserSelect
+            formControl={form.control}
+            name="advId"
+            showLabel={false}
+          />
+        )}
 
         <LanderSelect
           formControl={form.control}

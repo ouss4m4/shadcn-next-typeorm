@@ -20,6 +20,7 @@ import { ArrowUpDown } from 'lucide-react';
 import StatusLabel from '@/components/ui/status-label';
 import { CampaignStatusMap } from '@/app/(private)/shared/enums';
 import CampaignDataTableActionsCell from './CampaignDataTableActionsCell';
+import { useUserInfo } from '../../context/UserInfoContext';
 
 export default function CampaignsDataTable({
   data,
@@ -32,6 +33,7 @@ export default function CampaignsDataTable({
   state: ICampaignsListState;
   onFiltersChange: (data: Partial<ICampaignsListState>) => void;
 }) {
+  const userInfo = useUserInfo();
   const handleSortClick = (columnName: string) => {
     const sortDirection = state.order === 'asc' ? 'desc' : 'asc';
     if (state.sortBy === columnName) {
@@ -94,42 +96,43 @@ export default function CampaignsDataTable({
     );
   };
 
-  const columns: ColumnDef<ICampaign>[] = [
-    {
-      accessorKey: 'id',
-      header: () => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => handleSortClick('id')}
-            className="px-0"
-          >
-            ID
-            <ArrowUpDown
-              className={`ml-2 h-4 w-4 ${state.sortBy == 'id' ? 'text-primary' : ''}`}
-            />
-          </Button>
-        );
-      },
+  const columns: ColumnDef<ICampaign>[] = [];
+  columns.push({
+    accessorKey: 'id',
+    header: () => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => handleSortClick('id')}
+          className="px-0"
+        >
+          ID
+          <ArrowUpDown
+            className={`ml-2 h-4 w-4 ${state.sortBy == 'id' ? 'text-primary' : ''}`}
+          />
+        </Button>
+      );
     },
-    {
-      accessorKey: 'name',
-      header: () => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => handleSortClick('name')}
-            className="px-0"
-          >
-            Name
-            <ArrowUpDown
-              className={`ml-2 h-4 w-4 ${state.sortBy == 'name' ? 'text-primary' : ''}`}
-            />
-          </Button>
-        );
-      },
+  });
+  columns.push({
+    accessorKey: 'name',
+    header: () => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => handleSortClick('name')}
+          className="px-0"
+        >
+          Name
+          <ArrowUpDown
+            className={`ml-2 h-4 w-4 ${state.sortBy == 'name' ? 'text-primary' : ''}`}
+          />
+        </Button>
+      );
     },
-    {
+  });
+  if (userInfo?.role == 'Admin') {
+    columns.push({
       id: 'advertiser',
       accessorFn: (campaign) => campaign.advertiser.name,
       header: () => {
@@ -146,7 +149,10 @@ export default function CampaignsDataTable({
           </Button>
         );
       },
-    },
+    });
+  }
+
+  columns.push(
     {
       id: 'lander',
       accessorFn: (campaign) => campaign.lander.name,
@@ -235,7 +241,7 @@ export default function CampaignsDataTable({
         return <CampaignDataTableActionsCell campaign={campaign} />;
       },
     },
-  ];
+  );
 
   return (
     <DataTable
