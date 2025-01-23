@@ -117,3 +117,14 @@ export interface IUserInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ITrafficSource {
+  id: number;
+  uuid: string;
+  name: string;
+  publisherId: number;
+  publisher: Client;
+  status: number;
+  createdAt: Date;
+  updatedAt: Date;
+}

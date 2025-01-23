@@ -1,4 +1,4 @@
-import { ICampaign } from '@/app/(private)/shared/types';
+import { ITrafficSource } from '@/app/(private)/shared/types';
 import { fetchApi } from '@/app/(private)/utils/api';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,11 +21,10 @@ import { MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-export default function CampaignDataTableActionsCell({
-  campaign,
-  // onDelete
+export default function TrafficSourceTableActionsCell({
+  trafficSource,
 }: {
-  campaign: ICampaign;
+  trafficSource: ITrafficSource;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -36,7 +35,7 @@ export default function CampaignDataTableActionsCell({
     }
     setIsDeleting(true);
     try {
-      await fetchApi(`/campaigns/${id}`, {
+      await fetchApi(`/traffic-sources/${id}`, {
         method: 'DELETE',
       });
 
@@ -46,7 +45,6 @@ export default function CampaignDataTableActionsCell({
       console.error(error);
       setIsDeleting(false);
     }
-    // setIsDialogOpen(false);
   };
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -62,7 +60,7 @@ export default function CampaignDataTableActionsCell({
           <DropdownMenuItem asChild>
             <Link
               className="cursor-pointer"
-              href={`campaigns/${campaign.id}/edit`}
+              href={`traffic-sources/${trafficSource.id}/edit`}
             >
               Edit
             </Link>
@@ -70,7 +68,7 @@ export default function CampaignDataTableActionsCell({
           <DropdownMenuItem asChild>
             <Link
               className="cursor-pointer"
-              href={`campaigns/${campaign.id}/duplicate`}
+              href={`traffic-sources/${trafficSource.id}/duplicate`}
             >
               Duplicate
             </Link>
@@ -85,7 +83,7 @@ export default function CampaignDataTableActionsCell({
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. Are you sure you want to delete this
-            campaign?
+            traffic source?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -105,7 +103,7 @@ export default function CampaignDataTableActionsCell({
               <Button
                 type="submit"
                 variant="destructive"
-                onClick={() => handleDeleteClick(campaign.id)}
+                onClick={() => handleDeleteClick(trafficSource.id)}
               >
                 Delete
               </Button>
