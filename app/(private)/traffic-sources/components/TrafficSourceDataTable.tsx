@@ -6,6 +6,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusLabel from '@/components/ui/status-label';
 import { TrafficSourceStatusMap } from '../../shared/enums';
 import TrafficSourceTableActionsCell from './TrafficSourceDataTableActionsCell';
+import { Button } from '@/components/ui/button';
+import { ArrowUpDown } from 'lucide-react';
 
 export default function TrafficSourceDataTable({
   data,
@@ -14,8 +16,18 @@ export default function TrafficSourceDataTable({
 }) {
   const columns: ColumnDef<ITrafficSource>[] = [
     {
-      header: 'ID',
       accessorKey: 'id',
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            ID
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       header: 'Name',

@@ -128,3 +128,14 @@ export interface ITrafficSource {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IPlacement {
+  id: number;
+  uuid: string;
+  name: string;
+  publisherId: number;
+  publisher: Client;
+  status: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
