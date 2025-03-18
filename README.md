@@ -1,6 +1,6 @@
 # Full Stack App CPC Exchange app
 
-NEXT for Frontend <a href="https://adwora.vercal.app" target="_blank">Live</a>  
+NEXT for Frontend <a href="https://adwora.vercel.app" target="_blank">Live</a>  
 NEST for Backend <a href="https://api.bzouss.com/api" target="_blank">Live</a>
 
 ## Stack/Tools
